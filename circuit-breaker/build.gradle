@@ -1,0 +1,32 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+        springCloudVersion = 'Finchley.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply from: '../gradle/allProjects.gradle'
+
+dependencies {
+    // Hcom Bákom
+    implementation('com.netflix.hystrix:hystrix-core:1.5.12')
+    implementation('com.netflix.archaius:archaius-core:0.7.6')
+    implementation('hcom.foundation.net:thermos-api:8.0.224')
+    implementation('hcom.foundation.net:thermos-integration:8.0.224')
+    implementation group: 'hcom.assembly', name: 'thermos-spring-assembly-bundle', version: '1.0.15'//, ext: 'pom'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: springBootVersion, ext: 'pom'
+
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-dependencies', version: springCloudVersion, ext: 'pom'
+    //compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.1.0.RELEASE')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
