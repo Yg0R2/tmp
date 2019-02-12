@@ -1,0 +1,18 @@
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.yg0r2'
+    version = '0.0.1-SNAPSHOT'
+
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+}
