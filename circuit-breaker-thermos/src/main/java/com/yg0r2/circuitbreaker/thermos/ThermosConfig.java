@@ -19,7 +19,7 @@ import com.hotels.thermos.spring.domain.CircuitBreakerConfigurationWrapper;
 @ComponentScan("com.hotels.thermos.spring.*")
 public class ThermosConfig {
 
-    private Map<String, NewCircuitBreakerConfiguration> methodConfigs;
+    private Map<String, CircuitBreakerConfiguration> methodConfigs;
 
     @Bean
     public ThermosEngine thermosEngine() {
@@ -31,11 +31,11 @@ public class ThermosConfig {
         return new ThermosSpringConfig(true, createCircuitBreakerConfigs());
     }
 
-    public Map<String, NewCircuitBreakerConfiguration> getMethodConfigs() {
+    public Map<String, CircuitBreakerConfiguration> getMethodConfigs() {
         return methodConfigs;
     }
 
-    public void setMethodConfigs(Map<String, NewCircuitBreakerConfiguration> methodConfigs) {
+    public void setMethodConfigs(Map<String, CircuitBreakerConfiguration> methodConfigs) {
         this.methodConfigs = methodConfigs;
     }
 
@@ -43,30 +43,16 @@ public class ThermosConfig {
         CircuitBreakerMethodConfigs configs = new CircuitBreakerMethodConfigs();//TODO: Wrapper
 
         methodConfigs.entrySet().stream()
-            .forEach(entry -> configs.addWrappedConfig(entry.getKey(), createCircuitBreakerConfigurationWrapper(entry.getValue())));
+            .forEach(entry -> configs.addWrappedConfig(entry.getKey(), createCircuitBreakerConfigurationWrapper(entry)));
 
         return configs;
     }
 
-    private CircuitBreakerConfigurationWrapper createCircuitBreakerConfigurationWrapper(NewCircuitBreakerConfiguration newCircuitBreakerConfiguration) {
+    private CircuitBreakerConfigurationWrapper createCircuitBreakerConfigurationWrapper(Map.Entry<String, CircuitBreakerConfiguration> methodConfigEntry) {
         return CircuitBreakerConfigurationWrapper.CircuitBreakerConfigurationWrapperBuilder.builder()
-            .commandName(newCircuitBreakerConfiguration.getCommandName())
-            .circuitBreakerConfiguration(newCircuitBreakerConfiguration)
+            .commandName(methodConfigEntry.getKey())
+            .circuitBreakerConfiguration(methodConfigEntry.getValue())
             .build();
-    }
-
-    @Configuration
-    @ConfigurationProperties(prefix = "thermos.method-configs")
-    public static class NewCircuitBreakerConfiguration extends CircuitBreakerConfiguration {
-        private String commandName;
-
-        public String getCommandName() {
-            return commandName;
-        }
-
-        public void setCommandName(String commandName) {
-            this.commandName = commandName;
-        }
     }
 
 }
