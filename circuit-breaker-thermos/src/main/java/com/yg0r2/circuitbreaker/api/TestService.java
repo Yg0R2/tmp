@@ -4,6 +4,4 @@ public interface TestService {
 
     String failingMethod();
 
-    String fallbackMethod();
-
 }

@@ -15,14 +15,16 @@ public class TestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
 
+    private static int COUNTER = 0;
+
     @Autowired
     private TestService thermosTestService;
     @Autowired
-    private CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker;
+    private CircuitBreakerProxy<TestService> thermosTestServiceCircuitBreaker;
 
     @GetMapping("/test")
     public String testThermos() {
-        LOGGER.info("isOpen: {}", thermosBackendServiceCircuitBreaker.isCircuitOpen("failingMethodValidation"));
+        LOGGER.info("call counter: {}, isOpen: {}", ++COUNTER, thermosTestServiceCircuitBreaker.isCircuitOpen("failingMethodValidation"));
 
         return thermosTestService.failingMethod();
     }

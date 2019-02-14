@@ -1,12 +1,12 @@
 thermos:
   method-configs:
     thermosBackendService:
-      requestVolumeThreshold: 2
       errorThresholdPercentage: 1
+      requestVolumeThreshold: 2
       requestCacheEnabled: false
       fallbackEnabled: false
     thermosTestService:
-      requestVolumeThreshold: 3
       errorThresholdPercentage: 1
+      requestVolumeThreshold: 4
       requestCacheEnabled: false
       fallbackEnabled: true
