@@ -5,8 +5,9 @@ thermos:
       errorThresholdPercentage: 1
       requestVolumeThreshold: 3
       requestCacheEnabled: false
-      fallbackEnabled: true
+      fallbackEnabled: false
       requestLogEnabled: false
+      metrics.rollingStats.timeInMilliseconds: 5000
     thermosBackendService:
       commandName: getDataValidation
       errorThresholdPercentage: 1
@@ -14,3 +15,4 @@ thermos:
       requestCacheEnabled: false
       fallbackEnabled: false
       requestLogEnabled: false
+      metrics.rollingStats.timeInMilliseconds: 5000
