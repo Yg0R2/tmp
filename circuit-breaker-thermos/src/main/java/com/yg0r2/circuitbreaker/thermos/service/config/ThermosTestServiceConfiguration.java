@@ -22,18 +22,13 @@ public class ThermosTestServiceConfiguration {
     private ThermosHelper thermosHelper;
 
     @Bean
-    public TestService thermosTestService(TestService defaultTestService) {
-        return thermosHelper.createCircuitBreakerProxy(defaultTestService, METHOD_NAME, THERMOS_CONFIG_NAME);
-    }
-
-    @Bean
-    public CircuitBreakerProxy<TestService> thermosTestServiceCircuitBreaker(TestService defaultTestService) {
-        return thermosHelper.createCircuitBreaker(defaultTestService, METHOD_NAME, THERMOS_CONFIG_NAME);
-    }
-
-    @Bean
-    protected TestService defaultTestService() {
+    public TestService thermosTestService() {
         return new ThermosTestService(thermosBackendService);
+    }
+
+    @Bean
+    public CircuitBreakerProxy<TestService> thermosTestServiceCircuitBreaker(TestService thermosTestService) {
+        return thermosHelper.createCircuitBreaker(thermosTestService, METHOD_NAME, THERMOS_CONFIG_NAME);
     }
 
 }

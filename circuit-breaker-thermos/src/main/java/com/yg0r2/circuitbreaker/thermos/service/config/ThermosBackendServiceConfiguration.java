@@ -7,26 +7,19 @@ import org.springframework.context.annotation.Configuration;
 import com.hotels.thermos.proxy.CircuitBreakerProxy;
 import com.yg0r2.circuitbreaker.api.BackendService;
 import com.yg0r2.circuitbreaker.thermos.ThermosHelper;
-import com.yg0r2.circuitbreaker.thermos.service.ThermosBackendService;
 
 @Configuration
 public class ThermosBackendServiceConfiguration {
+
+    private static final String METHOD_NAME = "getData";
+    private static final String THERMOS_CONFIG_NAME = "thermosBackendService";
 
     @Autowired
     private ThermosHelper thermosHelper;
 
     @Bean
-    public BackendService thermosBackendService(CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker) {
-        return thermosHelper.createCircuitBreakerProxy(createThermosBackendService(), "getData", "thermosBackendService");
-    }
-
-    @Bean
-    public CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker() {
-        return thermosHelper.createCircuitBreaker(createThermosBackendService(), "getData", "thermosBackendService");
-    }
-
-    private BackendService createThermosBackendService() {
-        return new ThermosBackendService();
+    public CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker(BackendService thermosBackendService) {
+        return thermosHelper.createCircuitBreaker(thermosBackendService, METHOD_NAME, THERMOS_CONFIG_NAME);
     }
 
 }

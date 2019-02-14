@@ -1,12 +1,16 @@
 thermos:
   method-configs:
+    thermosTestService:
+      commandName: failingMethodValidation
+      errorThresholdPercentage: 1
+      requestVolumeThreshold: 3
+      requestCacheEnabled: false
+      fallbackEnabled: true
+      requestLogEnabled: false
     thermosBackendService:
+      commandName: getDataValidation
       errorThresholdPercentage: 1
       requestVolumeThreshold: 2
       requestCacheEnabled: false
       fallbackEnabled: false
-    thermosTestService:
-      errorThresholdPercentage: 1
-      requestVolumeThreshold: 4
-      requestCacheEnabled: false
-      fallbackEnabled: true
+      requestLogEnabled: false

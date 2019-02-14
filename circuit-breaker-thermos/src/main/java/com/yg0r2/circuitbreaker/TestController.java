@@ -21,10 +21,14 @@ public class TestController {
     private TestService thermosTestService;
     @Autowired
     private CircuitBreakerProxy<TestService> thermosTestServiceCircuitBreaker;
+    @Autowired
+    private CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker;
 
     @GetMapping("/test")
     public String testThermos() {
-        LOGGER.info("call counter: {}, isOpen: {}", ++COUNTER, thermosTestServiceCircuitBreaker.isCircuitOpen("failingMethodValidation"));
+        LOGGER.info("TestController call counter: {}", ++COUNTER);
+        LOGGER.info("ThermosTestServiceCircuitBreaker isOpen: {}", thermosTestServiceCircuitBreaker.isCircuitOpen("failingMethodValidation"));
+        LOGGER.info("ThermosBackendServiceCircuitBreaker isOpen: {}", thermosBackendServiceCircuitBreaker.isCircuitOpen("getDataValidation"));
 
         return thermosTestService.failingMethod();
     }
