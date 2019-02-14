@@ -1,7 +1,11 @@
 pluginManagement {
-	repositories {
-		gradlePluginPortal()
-	}
+    repositories {
+        gradlePluginPortal()
+    }
 }
+
 rootProject.name = 'tmp'
-include 'circuit-breaker'
+include 'circuit-breaker-api'
+include 'circuit-breaker-hystrix'
+include 'circuit-breaker-thermos'
+
