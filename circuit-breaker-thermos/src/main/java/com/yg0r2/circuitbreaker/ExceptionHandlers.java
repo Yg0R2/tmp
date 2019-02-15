@@ -24,42 +24,63 @@ public class ExceptionHandlers {
     private String backendServiceThermosCommandName;
 
     @Autowired
-    private CircuitBreakerProxy<TestService> thermosTestServiceCircuitBreaker;
+    private CircuitBreakerProxy<TestService> thermosTest1ServiceCircuitBreaker;
+    @Autowired
+    private CircuitBreakerProxy<TestService> thermosTest2ServiceCircuitBreaker;
     @Autowired
     private CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker;
 
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<String> handleRuntimeExceptions() {
-        HystrixCircuitBreaker testServiceHystrixCircuitBreaker = getCircuitBreaker(testServiceThermosCommandName);
-        boolean testServiceHystrixCircuitBreakerAllowRequest = circuitBreakerAllowsRequest(testServiceHystrixCircuitBreaker);
-        HystrixCircuitBreaker backendServiceHystrixCircuitBreaker = getCircuitBreaker(backendServiceThermosCommandName);
-        boolean backendServiceHystrixCircuitBreakerAllowRequest = circuitBreakerAllowsRequest(backendServiceHystrixCircuitBreaker);
+        HystrixCircuitBreaker hystrixTest1ServiceCircuitBreaker = getCircuitBreaker(testServiceThermosCommandName + 1);
+        HystrixCircuitBreaker hystrixTest2ServiceCircuitBreaker = getCircuitBreaker(testServiceThermosCommandName + 2);
+        HystrixCircuitBreaker hystrixBackendServiceCircuitBreaker = getCircuitBreaker(backendServiceThermosCommandName);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("<ul><li>");
-        sb.append("thermos TestServiceCircuitBreaker isOpen:");
-        sb.append(thermosTestServiceCircuitBreaker.isCircuitOpen(testServiceThermosCommandName));
-        sb.append("</li><li>");
-        sb.append("thermos BackendServiceCircuitBreaker isOpen:");
-        sb.append(thermosBackendServiceCircuitBreaker.isCircuitOpen(backendServiceThermosCommandName));
-        sb.append("</li><li>");
-        sb.append("Hystrix TestService CircuitBreaker allowRequest:");
-        sb.append(testServiceHystrixCircuitBreakerAllowRequest);
-        sb.append("</li><li>");
-        sb.append("Hystrix BackendService CircuitBreaker allowRequest:");
-        sb.append(backendServiceHystrixCircuitBreakerAllowRequest);
-        sb.append("</li></ul>");
+
+        sb.append("<ul>");
+
+        sb.append(createLi("Thermos Test1ServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosTest1ServiceCircuitBreaker, (testServiceThermosCommandName + 1))));
+        sb.append(createLi("Thermos Test2ServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosTest2ServiceCircuitBreaker, (testServiceThermosCommandName + 2))));
+        sb.append(createLi("Thermos BackendServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosBackendServiceCircuitBreaker, backendServiceThermosCommandName)));
+
+        sb.append("<li></li>");
+
+        sb.append(createLi("Hystrix Test1ServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixTest1ServiceCircuitBreaker)));
+        sb.append(createLi("Hystrix Test2ServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixTest2ServiceCircuitBreaker)));
+        sb.append(createLi("Hystrix BackendServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixBackendServiceCircuitBreaker)));
+
+        sb.append("</ul>");
 
         return new ResponseEntity<>(sb.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    private StringBuilder createLi(String text, boolean value) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<li>");
+        sb.append(text);
+        sb.append(value);
+        sb.append("</li>");
+
+        return sb;
+    }
+
     private HystrixCircuitBreaker getCircuitBreaker(String commandName) {
-        HystrixCommandKey hystrixCommandKey = HystrixCommandKey.Factory.asKey(commandName);
-        return HystrixCircuitBreaker.Factory.getInstance(hystrixCommandKey);
+        return Optional.ofNullable(commandName)
+            .map(HystrixCommandKey.Factory::asKey)
+            .map(HystrixCircuitBreaker.Factory::getInstance)
+            .orElse(null);
+    }
+
+    private boolean circuitBreakerIsOpen(CircuitBreakerProxy<?> circuitBreakerProxy, String commandName) {
+        return circuitBreakerProxy.isCircuitOpen(commandName);
     }
 
     private boolean circuitBreakerAllowsRequest(HystrixCircuitBreaker hystrixCircuitBreaker) {
-        return Optional.ofNullable(hystrixCircuitBreaker).map(HystrixCircuitBreaker::allowRequest).orElse(false);
+        return Optional.ofNullable(hystrixCircuitBreaker)
+            .map(HystrixCircuitBreaker::allowRequest)
+            .orElse(false);
     }
 
 }

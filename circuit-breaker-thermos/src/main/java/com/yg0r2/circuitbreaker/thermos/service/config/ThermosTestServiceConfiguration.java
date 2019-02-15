@@ -9,7 +9,7 @@ import com.hotels.thermos.proxy.CircuitBreakerProxy;
 import com.yg0r2.circuitbreaker.api.BackendService;
 import com.yg0r2.circuitbreaker.api.TestService;
 import com.yg0r2.circuitbreaker.thermos.ThermosHelper;
-import com.yg0r2.circuitbreaker.thermos.service.ThermosTestService;
+import com.yg0r2.circuitbreaker.thermos.service.ThermosTest1Service;
 
 @Configuration
 public class ThermosTestServiceConfiguration {
@@ -31,18 +31,28 @@ public class ThermosTestServiceConfiguration {
     private ThermosHelper thermosHelper;
 
     @Bean
-    public TestService thermosTestService(TestService defaultThermosTestService) {
-        return thermosHelper.createCircuitBreakerProxy(defaultThermosTestService, wrappedMethodName, wrappedMethodArgTypes, thermosCommandName, thermosGroupName, THERMOS_CONFIG_NAME);
+    public TestService thermosTest1Service(TestService defaultThermosTestService) {
+        return thermosHelper.createCircuitBreakerProxy(defaultThermosTestService, wrappedMethodName, wrappedMethodArgTypes, thermosCommandName + 1, thermosGroupName, THERMOS_CONFIG_NAME);
     }
 
     @Bean
-    public CircuitBreakerProxy<TestService> thermosTestServiceCircuitBreaker(TestService thermosTestService) {
-        return thermosHelper.createCircuitBreaker(thermosTestService, wrappedMethodName, wrappedMethodArgTypes, thermosCommandName, thermosGroupName, THERMOS_CONFIG_NAME);
+    public CircuitBreakerProxy<TestService> thermosTest1ServiceCircuitBreaker(TestService thermosTest1Service) {
+        return thermosHelper.createCircuitBreaker(thermosTest1Service, wrappedMethodName, wrappedMethodArgTypes, thermosCommandName + 1, thermosGroupName, THERMOS_CONFIG_NAME);
+    }
+
+    @Bean
+    public TestService thermosTest2Service(TestService defaultThermosTestService) {
+        return thermosHelper.createCircuitBreakerProxy(defaultThermosTestService, wrappedMethodName, wrappedMethodArgTypes, thermosCommandName + 2, thermosGroupName, THERMOS_CONFIG_NAME);
+    }
+
+    @Bean
+    public CircuitBreakerProxy<TestService> thermosTest2ServiceCircuitBreaker(TestService thermosTest2Service) {
+        return thermosHelper.createCircuitBreaker(thermosTest2Service, wrappedMethodName, wrappedMethodArgTypes, thermosCommandName + 2, thermosGroupName, THERMOS_CONFIG_NAME);
     }
 
     @Bean
     protected TestService defaultThermosTestService() {
-        return new ThermosTestService(thermosBackendService);
+        return new ThermosTest1Service(thermosBackendService);
     }
 
 }
