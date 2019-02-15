@@ -21,7 +21,7 @@ public class HystrixBackendService implements BackendService {
     @Override
     public String getData() {
         LOGGER.info("inside HystrixBackendService.getData");
-return "alma";
+        return "alma";
         //throw new RuntimeException("FAILED");
     }
 

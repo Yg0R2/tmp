@@ -9,7 +9,6 @@ thermos:
       errorThresholdPercentage: 1
       requestVolumeThreshold: 3
       requestCacheEnabled: false
-      fallbackEnabled: false
       requestLogEnabled: false
       metrics.rollingStats.timeInMilliseconds: 5000
     thermosBackendService:
