@@ -19,8 +19,8 @@ public class ThermosTestService implements TestService {
     }
 
     @Override
-    public String failingMethod() {
-        LOGGER.info("inside ThermosTestService.failingMethod: {}", ++COUNTER);
+    public String processRequest() {
+        LOGGER.info("inside ThermosTestService.processRequest: {}", ++COUNTER);
 
         return backendService.getData();
     }

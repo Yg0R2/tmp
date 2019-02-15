@@ -21,8 +21,7 @@ public class TestController {
     @GetMapping("/test")
     public String testThermos() {
         LOGGER.info("TestController call counter: {}", ++COUNTER);
-
-        return thermosTestService.failingMethod();
+        return thermosTestService.processRequest();
     }
 
 }

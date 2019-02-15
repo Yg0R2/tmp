@@ -2,7 +2,7 @@ thermos:
   method-configs:
     thermosTestService:
       wrappedMethod:
-        name: failingMethod
+        name: processRequest
         argTypes: ""
       commandName: ${thermos.method-configs.thermosTestService.wrappedMethod.name}Validation
       groupName: ${thermos.method-configs.thermosTestService.commandName}Group
