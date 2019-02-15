@@ -42,8 +42,7 @@ public class ThermosConfig {
     private CircuitBreakerMethodConfigs createCircuitBreakerConfigs() {
         CircuitBreakerMethodConfigs configs = new CircuitBreakerMethodConfigs();
 
-        methodConfigs.entrySet()
-            .forEach(entry -> configs.addWrappedConfig(entry.getKey(), createCircuitBreakerConfigurationWrapper(entry.getValue())));
+        methodConfigs.forEach((key, value) -> configs.addWrappedConfig(key, createCircuitBreakerConfigurationWrapper(value)));
 
         return configs;
     }
