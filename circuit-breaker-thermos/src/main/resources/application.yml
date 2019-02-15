@@ -11,6 +11,7 @@ thermos:
       requestCacheEnabled: false
       requestLogEnabled: false
       metrics.rollingStats.timeInMilliseconds: 5000
+      sleepWindowInMilliseconds: 5000
     thermosBackendService:
       wrappedMethod:
         name: getData
