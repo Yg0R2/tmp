@@ -5,7 +5,6 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.hotels.thermos.CircuitBreaker;
 import com.hotels.thermos.CircuitBreakerConfiguration;
 import com.hotels.thermos.ThermosEngine;
 import com.hotels.thermos.proxy.CircuitBreakerProxy;
@@ -20,22 +19,19 @@ public class ThermosHelper {
     @Autowired
     private ThermosSpringConfig thermosSpring;
 
-    public <T> T createCircuitBreakerProxy(Object proxyObject, String methodName, String thermosConfigName) {
-        MethodDefinition methodDefinition = getMethodDefinition(methodName, thermosConfigName);
+    public <T> T createCircuitBreakerProxy(Object proxyObject, String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
+        MethodDefinition methodDefinition = getMethodDefinition(methodName, methodArgTypes, commandName, groupName, thermosConfigName);
 
         return CircuitBreakerProxy.createProxy(proxyObject, Collections.singletonList(methodDefinition), true, thermosEngine);
     }
 
-    public <T> CircuitBreakerProxy<T> createCircuitBreaker(Object proxyObject, String methodName, String thermosConfigName) {
-        MethodDefinition methodDefinition = getMethodDefinition(methodName, thermosConfigName);
+    public <T> CircuitBreakerProxy<T> createCircuitBreaker(Object proxyObject, String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
+        MethodDefinition methodDefinition = getMethodDefinition(methodName, methodArgTypes, commandName, groupName, thermosConfigName);
 
         return CircuitBreakerProxy.createCircuitBreaker(proxyObject, Collections.singletonList(methodDefinition), true, thermosEngine);
     }
 
-    private MethodDefinition getMethodDefinition(String methodName, String thermosConfigName) {
-        String methodArgTypes = null;
-        String commandName = methodName + "Validation";
-        String groupName = "validation";
+    private MethodDefinition getMethodDefinition(String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
         String fallbackExceptionClassName = RuntimeException.class.getName();
 
         CircuitBreakerConfiguration circuitBreakerConfiguration = getCircuitBreakerConfig(thermosConfigName);

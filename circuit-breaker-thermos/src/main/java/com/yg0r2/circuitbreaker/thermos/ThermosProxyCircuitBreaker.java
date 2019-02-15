@@ -2,8 +2,6 @@ package com.yg0r2.circuitbreaker.thermos;
 
 import java.lang.reflect.Method;
 
-import org.springframework.stereotype.Component;
-
 import com.hotels.thermos.proxy.GenericProxyCircuitBreaker;
 
 public class ThermosProxyCircuitBreaker<T> extends GenericProxyCircuitBreaker<T> {

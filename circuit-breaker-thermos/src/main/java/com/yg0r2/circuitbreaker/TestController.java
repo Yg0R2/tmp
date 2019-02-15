@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotels.thermos.proxy.CircuitBreakerProxy;
-import com.yg0r2.circuitbreaker.api.BackendService;
 import com.yg0r2.circuitbreaker.api.TestService;
 
 @RestController

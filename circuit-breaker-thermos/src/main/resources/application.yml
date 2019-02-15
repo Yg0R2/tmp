@@ -1,7 +1,11 @@
 thermos:
   method-configs:
     thermosTestService:
-      commandName: failingMethodValidation
+      wrappedMethod:
+        name: failingMethod
+        argTypes: ""
+      commandName: ${thermos.method-configs.thermosTestService.wrappedMethod.name}Validation
+      groupName: ${thermos.method-configs.thermosTestService.commandName}Group
       errorThresholdPercentage: 1
       requestVolumeThreshold: 3
       requestCacheEnabled: false
@@ -9,7 +13,11 @@ thermos:
       requestLogEnabled: false
       metrics.rollingStats.timeInMilliseconds: 5000
     thermosBackendService:
-      commandName: getDataValidation
+      wrappedMethod:
+        name: getData
+        argTypes: ""
+      commandName: ${thermos.method-configs.thermosBackendService.wrappedMethod.name}Validation
+      groupName: ${thermos.method-configs.thermosBackendService.commandName}Group
       errorThresholdPercentage: 1
       requestVolumeThreshold: 2
       requestCacheEnabled: false
