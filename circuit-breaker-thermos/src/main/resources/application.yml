@@ -12,12 +12,13 @@ thermos:
       requestLogEnabled: false
       metrics.rollingStats.timeInMilliseconds: 5000
       sleepWindowInMilliseconds: 5000
+  service-configs:
     thermosBackendService:
       wrappedMethod:
         name: getData
         argTypes: ""
-      commandName: ${thermos.method-configs.thermosBackendService.wrappedMethod.name}Validation
-      groupName: ${thermos.method-configs.thermosBackendService.commandName}Group
+      commandName: ${thermos.service-configs.thermosBackendService.wrappedMethod.name}Validation
+      groupName: ${thermos.service-configs.thermosBackendService.commandName}Group
       errorThresholdPercentage: 1
       requestVolumeThreshold: 2
       requestCacheEnabled: false

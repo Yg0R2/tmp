@@ -14,13 +14,13 @@ public class ThermosBackendServiceConfiguration {
 
     private static final String THERMOS_CONFIG_NAME = "thermosBackendService";
 
-    @Value("${thermos.method-configs." + THERMOS_CONFIG_NAME + ".wrappedMethod.name}")
+    @Value("${thermos.service-configs." + THERMOS_CONFIG_NAME + ".wrappedMethod.name}")
     private String wrappedMethodName;
-    @Value("${thermos.method-configs." + THERMOS_CONFIG_NAME + ".wrappedMethod.argTypes}")
+    @Value("${thermos.service-configs." + THERMOS_CONFIG_NAME + ".wrappedMethod.argTypes}")
     private String wrappedMethodArgTypes;
-    @Value("${thermos.method-configs." + THERMOS_CONFIG_NAME + ".commandName}")
+    @Value("${thermos.service-configs." + THERMOS_CONFIG_NAME + ".commandName}")
     private String thermosCommandName;
-    @Value("${thermos.method-configs." + THERMOS_CONFIG_NAME + ".groupName}")
+    @Value("${thermos.service-configs." + THERMOS_CONFIG_NAME + ".groupName}")
     private String thermosGroupName;
 
     @Autowired

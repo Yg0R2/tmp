@@ -20,7 +20,7 @@ public class ExceptionHandlers {
 
     @Value("${thermos.method-configs.thermosTestService.commandName}")
     private String testServiceThermosCommandName;
-    @Value("${thermos.method-configs.thermosBackendService.commandName}")
+    @Value("${thermos.service-configs.thermosBackendService.commandName}")
     private String backendServiceThermosCommandName;
 
     @Autowired
@@ -41,13 +41,16 @@ public class ExceptionHandlers {
         sb.append("<ul>");
 
         sb.append(createLi("Thermos Test1ServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosTest1ServiceCircuitBreaker, (testServiceThermosCommandName + 1))));
-        sb.append(createLi("Thermos Test2ServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosTest2ServiceCircuitBreaker, (testServiceThermosCommandName + 2))));
-        sb.append(createLi("Thermos BackendServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosBackendServiceCircuitBreaker, backendServiceThermosCommandName)));
+        sb.append(createLi("Hystrix Test1ServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixTest1ServiceCircuitBreaker)));
 
         sb.append("<li></li>");
 
-        sb.append(createLi("Hystrix Test1ServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixTest1ServiceCircuitBreaker)));
+        sb.append(createLi("Thermos Test2ServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosTest2ServiceCircuitBreaker, (testServiceThermosCommandName + 2))));
         sb.append(createLi("Hystrix Test2ServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixTest2ServiceCircuitBreaker)));
+
+        sb.append("<li></li>");
+
+        sb.append(createLi("Thermos BackendServiceCircuitBreaker isOpen:", circuitBreakerIsOpen(thermosBackendServiceCircuitBreaker, backendServiceThermosCommandName)));
         sb.append(createLi("Hystrix BackendServiceCircuitBreaker allowRequest:", circuitBreakerAllowsRequest(hystrixBackendServiceCircuitBreaker)));
 
         sb.append("</ul>");

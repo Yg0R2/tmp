@@ -1,7 +1,7 @@
 package com.yg0r2.circuitbreaker.thermos;
 
+import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,13 +13,15 @@ import com.hotels.thermos.ThermosEngine;
 import com.hotels.thermos.spring.circuitbreaker.CircuitBreakerMethodConfigs;
 import com.hotels.thermos.spring.config.ThermosSpringConfig;
 import com.hotels.thermos.spring.domain.CircuitBreakerConfigurationWrapper;
+import com.yg0r2.circuitbreaker.thermos.domain.CircuitBreakerConfiguration;
 
 @Configuration
 @ConfigurationProperties(prefix = "thermos")
 @ComponentScan("com.hotels.thermos.spring.*")
 public class ThermosConfig {
 
-    private Map<String, CircuitBreakerConfiguration> methodConfigs;
+    private Map<String, CircuitBreakerConfiguration.CircuitBreakerMethodConfiguration> methodConfigs;
+    private Map<String, CircuitBreakerConfiguration.CircuitBreakerServiceConfiguration> serviceConfigs;
 
     @Bean
     public ThermosEngine thermosEngine() {
@@ -31,18 +33,27 @@ public class ThermosConfig {
         return new ThermosSpringConfig(true, createCircuitBreakerConfigs());
     }
 
-    public Map<String, CircuitBreakerConfiguration> getMethodConfigs() {
+    public Map<String, CircuitBreakerConfiguration.CircuitBreakerMethodConfiguration> getMethodConfigs() {
         return methodConfigs;
     }
 
-    public void setMethodConfigs(Map<String, CircuitBreakerConfiguration> methodConfigs) {
-        this.methodConfigs = methodConfigs;
+    public void setMethodConfigs(Map<String, CircuitBreakerConfiguration.CircuitBreakerMethodConfiguration> methodConfigs) {
+        this.methodConfigs = Collections.unmodifiableMap(methodConfigs);
+    }
+
+    public Map<String, CircuitBreakerConfiguration.CircuitBreakerServiceConfiguration> getServiceConfigs() {
+        return serviceConfigs;
+    }
+
+    public void setServiceConfigs(Map<String, CircuitBreakerConfiguration.CircuitBreakerServiceConfiguration> serviceConfigs) {
+        this.serviceConfigs = serviceConfigs;
     }
 
     private CircuitBreakerMethodConfigs createCircuitBreakerConfigs() {
         CircuitBreakerMethodConfigs configs = new CircuitBreakerMethodConfigs();
 
         methodConfigs.forEach((key, value) -> configs.addWrappedConfig(key, createCircuitBreakerConfigurationWrapper(value)));
+        serviceConfigs.forEach((key, value) -> configs.addWrappedConfig(key, createCircuitBreakerConfigurationWrapper(value)));
 
         return configs;
     }
@@ -53,31 +64,6 @@ public class ThermosConfig {
             .groupName(circuitBreakerConfiguration.getGroupName().orElse(null))
             .circuitBreakerConfiguration(circuitBreakerConfiguration)
             .build();
-    }
-
-    @Configuration
-    @ConfigurationProperties(prefix = "thermos.method-configs")
-    protected static class CircuitBreakerConfiguration extends com.hotels.thermos.CircuitBreakerConfiguration {
-
-        private Optional<String> commandName;
-        private Optional<String> groupName;
-
-        public Optional<String> getCommandName() {
-            return commandName;
-        }
-
-        public void setCommandName(Optional<String> commandName) {
-            this.commandName = commandName;
-        }
-
-        public Optional<String> getGroupName() {
-            return groupName;
-        }
-
-        public void setGroupName(Optional<String> groupName) {
-            this.groupName = groupName;
-        }
-
     }
 
 }
