@@ -1,27 +1,27 @@
 thermos:
+  default-method-config: &defaultMethodConfig
+    sleepWindowInMilliseconds: 5000
+    metricsRollingStatisticalWindowInMilliseconds: 5000
+    errorThresholdPercentage: 1
+    requestVolumeThreshold: 2
   method-configs:
     thermosTestService:
+      <<: *defaultMethodConfig
       wrappedMethod:
         name: processRequest
         argTypes: ""
       commandName: ${thermos.method-configs.thermosTestService.wrappedMethod.name}Validation
       groupName: ${thermos.method-configs.thermosTestService.commandName}Group
-      errorThresholdPercentage: 1
-      requestVolumeThreshold: 3
-      requestCacheEnabled: false
-      requestLogEnabled: false
-      metrics.rollingStats.timeInMilliseconds: 5000
-      sleepWindowInMilliseconds: 5000
+  default-service-config: &defaultServiceConfig
+    sleepWindowInMilliseconds: 5000
+    metricsRollingStatisticalWindowInMilliseconds: 5000
+    errorThresholdPercentage: 1
+    requestVolumeThreshold: 4
   service-configs:
     thermosBackendService:
+      <<: *defaultServiceConfig
       wrappedMethod:
         name: getData
         argTypes: ""
       commandName: ${thermos.service-configs.thermosBackendService.wrappedMethod.name}Validation
       groupName: ${thermos.service-configs.thermosBackendService.commandName}Group
-      errorThresholdPercentage: 1
-      requestVolumeThreshold: 2
-      requestCacheEnabled: false
-      fallbackEnabled: false
-      requestLogEnabled: false
-      metrics.rollingStats.timeInMilliseconds: 5000
