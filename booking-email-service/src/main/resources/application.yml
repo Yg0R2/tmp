@@ -1,0 +1,3 @@
+emailSender:
+  host: http://bookingemailrequestqueuefeederservice.staging.hcom
+  endpoint: send/email
