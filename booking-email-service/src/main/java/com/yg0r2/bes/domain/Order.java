@@ -23,7 +23,7 @@ public class Order {
     public static class Builder {
 
         private String customerLastName;
-        private long orderNumber;
+        private Long orderNumber;
 
         public Builder withCustomerLastName(String customerLastName) {
             this.customerLastName = customerLastName;
@@ -31,7 +31,7 @@ public class Order {
             return this;
         }
 
-        public Builder withOrderNumber(long orderNumber) {
+        public Builder withOrderNumber(Long orderNumber) {
             this.orderNumber = orderNumber;
 
             return this;

@@ -8,16 +8,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yg0r2.bes.domain.EmailRequest;
+import com.yg0r2.bes.service.EmailRequestFactory;
 import com.yg0r2.bes.service.EmailSender;
 import com.yg0r2.bes.service.RequestContextFactory;
-import com.yg0r2.bes.service.EmailRequestFactory;
 
 @RestController
 public class RequestGeneratorController {
@@ -35,16 +35,13 @@ public class RequestGeneratorController {
     }
 
     @GetMapping(value = "/api/send", params = "count")
-    public HttpStatus sendEmails(@Valid @Min(1) @RequestParam int count, @Nullable Long orderNumber, @Nullable String lastName) {
-        try {
-            getRequests(count, orderNumber, lastName)
-                .forEach(emailRequest -> emailSender.sendEmail(emailRequest, requestContextFactory.create()));
-        }
-        catch (Exception e) {
-            return HttpStatus.INTERNAL_SERVER_ERROR;
-        }
+    public ResponseEntity<?> sendEmails(@Valid @Min(1) @RequestParam int count, @Nullable Long orderNumber, @Nullable String lastName) {
+            List<String> responses = getRequests(count, orderNumber, lastName).stream()
+                .map(emailRequest -> emailSender.sendEmail(emailRequest, requestContextFactory.create()))
+                .map(ResponseEntity::getBody)
+                .collect(Collectors.toList());
 
-        return HttpStatus.OK;
+        return ResponseEntity.ok(responses);
     }
 
     private List<EmailRequest> getRequests(int count, Long orderNumber, String lastName) {
