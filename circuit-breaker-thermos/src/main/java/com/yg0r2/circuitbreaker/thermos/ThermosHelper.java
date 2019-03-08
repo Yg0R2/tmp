@@ -12,20 +12,20 @@ import com.hotels.thermos.proxy.MethodDefinition;
 import com.hotels.thermos.spring.config.ThermosSpringConfig;
 
 @Component
-public class ThermosHelper {
+public class ThermosHelper<T> {
 
     @Autowired
     private ThermosEngine thermosEngine;
     @Autowired
     private ThermosSpringConfig thermosSpring;
 
-    public <T> T createCircuitBreakerProxy(Object proxyObject, String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
+    public T createCircuitBreakerProxy(Object proxyObject, String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
         MethodDefinition methodDefinition = getMethodDefinition(methodName, methodArgTypes, commandName, groupName, thermosConfigName);
 
         return CircuitBreakerProxy.createProxy(proxyObject, Collections.singletonList(methodDefinition), true, thermosEngine);
     }
 
-    public <T> CircuitBreakerProxy<T> createCircuitBreaker(Object proxyObject, String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
+    public CircuitBreakerProxy<T> createCircuitBreaker(Object proxyObject, String methodName, String methodArgTypes, String commandName, String groupName, String thermosConfigName) {
         MethodDefinition methodDefinition = getMethodDefinition(methodName, methodArgTypes, commandName, groupName, thermosConfigName);
 
         return CircuitBreakerProxy.createCircuitBreaker(proxyObject, Collections.singletonList(methodDefinition), true, thermosEngine);

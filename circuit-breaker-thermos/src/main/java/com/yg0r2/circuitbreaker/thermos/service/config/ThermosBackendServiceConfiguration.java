@@ -24,7 +24,7 @@ public class ThermosBackendServiceConfiguration {
     private String thermosGroupName;
 
     @Autowired
-    private ThermosHelper thermosHelper;
+    private ThermosHelper<BackendService> thermosHelper;
 
     @Bean
     public CircuitBreakerProxy<BackendService> thermosBackendServiceCircuitBreaker(BackendService thermosBackendService) {

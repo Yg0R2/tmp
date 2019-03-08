@@ -28,7 +28,7 @@ public class ThermosTestServiceConfiguration {
     @Autowired
     private BackendService thermosBackendService;
     @Autowired
-    private ThermosHelper thermosHelper;
+    private ThermosHelper<TestService> thermosHelper;
 
     @Bean
     public TestService thermosTest1Service(TestService defaultThermosTestService) {
