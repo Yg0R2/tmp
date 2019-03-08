@@ -8,4 +8,5 @@ rootProject.name = 'tmp'
 include 'circuit-breaker-hystrix'
 include 'circuit-breaker-thermos'
 include 'booking-email-service'
+include 'factorio'
 

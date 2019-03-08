@@ -1,0 +1,11 @@
+{
+  "name": "Wall",
+  "production": 1,
+  "time": 0.5,
+  "ingredients": [
+    {
+      "name": "Stone_brick",
+      "amount": 5
+    }
+  ]
+}

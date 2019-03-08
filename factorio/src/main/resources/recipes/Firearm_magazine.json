@@ -1,0 +1,11 @@
+{
+  "name": "Firearm_magazine",
+  "production": 1,
+  "time": 1,
+  "ingredients": [
+    {
+      "name": "Iron_plate",
+      "amount": 4
+    }
+  ]
+}

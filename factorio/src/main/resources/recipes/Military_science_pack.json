@@ -1,0 +1,19 @@
+{
+  "name": "Military_science_pack",
+  "production": 2,
+  "time": 10,
+  "ingredients": [
+    {
+      "name": "Grenade",
+      "amount": 1
+    },
+    {
+      "name": "Piercing_rounds_magazine",
+      "amount": 1
+    },
+    {
+      "name": "Wall",
+      "amount": 2
+    }
+  ]
+}

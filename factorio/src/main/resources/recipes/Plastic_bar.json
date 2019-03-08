@@ -1,0 +1,15 @@
+{
+  "name": "Plastic_bar",
+  "production": 2,
+  "time": 1,
+  "ingredients": [
+    {
+      "name": "Coal",
+      "amount": 1
+    },
+    {
+      "name": "Petroleum_gas",
+      "amount": 20
+    }
+  ]
+}

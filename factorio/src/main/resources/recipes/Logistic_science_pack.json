@@ -1,0 +1,15 @@
+{
+  "name": "Logistic_science_pack",
+  "production": 1,
+  "time": 6,
+  "ingredients": [
+    {
+      "name": "Transport_belt",
+      "amount": 1
+    },
+    {
+      "name": "Inserter",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Advanced_circuit",
+  "production": 1,
+  "producerMachineType": "assembler",
+  "time": 6,
+  "ingredients": [
+    {
+      "name": "Copper_cable",
+      "amount": 4
+    },
+    {
+      "name": "Electronic_circuit",
+      "amount": 2
+    },
+    {
+      "name": "Plastic_bar",
+      "amount": 2
+    }
+  ]
+}

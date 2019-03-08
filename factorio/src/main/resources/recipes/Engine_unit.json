@@ -1,0 +1,19 @@
+{
+  "name": "Engine_unit",
+  "production": 1,
+  "time": 10,
+  "ingredients": [
+    {
+      "name": "Iron_gear_wheel",
+      "amount": 1
+    },
+    {
+      "name": "Pipe",
+      "amount": 2
+    },
+    {
+      "name": "Steel_plate",
+      "amount": 1
+    }
+  ]
+}

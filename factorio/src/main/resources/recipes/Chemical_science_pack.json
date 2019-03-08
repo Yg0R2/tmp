@@ -1,0 +1,19 @@
+{
+  "name": "Chemical_science_pack",
+  "production": 2,
+  "time": 24,
+  "ingredients": [
+    {
+      "name": "Advanced_circuit",
+      "amount": 3
+    },
+    {
+      "name": "Engine_unit",
+      "amount": 2
+    },
+    {
+      "name": "Solid_fuel",
+      "amount": 1
+    }
+  ]
+}

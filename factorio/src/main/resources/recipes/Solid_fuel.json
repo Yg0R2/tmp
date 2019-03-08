@@ -1,0 +1,11 @@
+{
+  "name": "Solid_fuel",
+  "production": 1,
+  "time": 2,
+  "ingredients": [
+    {
+      "name": "Petroleum_gas",
+      "amount": 20
+    }
+  ]
+}

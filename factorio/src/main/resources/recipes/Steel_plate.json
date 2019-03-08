@@ -1,0 +1,11 @@
+{
+  "name": "Steel_plate",
+  "production": 1,
+  "time": 16,
+  "ingredients": [
+    {
+      "name": "Iron_plate",
+      "amount": 5
+    }
+  ]
+}

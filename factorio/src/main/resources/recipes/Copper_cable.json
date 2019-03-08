@@ -1,0 +1,11 @@
+{
+  "name": "Copper_cable",
+  "production": 2,
+  "time": 0.5,
+  "ingredients": [
+    {
+      "name": "Copper_plate",
+      "amount": 1
+    }
+  ]
+}

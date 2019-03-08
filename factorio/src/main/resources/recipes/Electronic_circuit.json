@@ -1,0 +1,15 @@
+{
+  "name": "Electronic_circuit",
+  "production": 1,
+  "time": 0.5,
+  "ingredients": [
+    {
+      "name": "Iron_plate",
+      "amount": 1
+    },
+    {
+      "name": "Copper_cable",
+      "amount": 2
+    }
+  ]
+}

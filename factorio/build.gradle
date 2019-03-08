@@ -1,0 +1,18 @@
+apply from: '../gradle/allProjects.gradle'
+
+test {
+    useTestNG()
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: springBootVersion, ext: 'pom'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+
+    implementation group: 'com.h2database', name: 'h2', version: '+'
+
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
+    testImplementation group: 'org.testng', name: 'testng', version: '+'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

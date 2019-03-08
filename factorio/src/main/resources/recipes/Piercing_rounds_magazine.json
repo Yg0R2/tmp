@@ -1,0 +1,19 @@
+{
+  "name": "Piercing_rounds_magazine",
+  "production": 1,
+  "time": 3,
+  "ingredients": [
+    {
+      "name": "Copper_plate",
+      "amount": 5
+    },
+    {
+      "name": "Firearm_magazine",
+      "amount": 1
+    },
+    {
+      "name": "Steel_plate",
+      "amount": 1
+    }
+  ]
+}
