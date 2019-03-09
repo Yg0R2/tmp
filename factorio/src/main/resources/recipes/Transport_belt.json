@@ -2,6 +2,12 @@
   "name": "Transport_belt",
   "production": 2,
   "time": 0.5,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_1",
+    "Assembling_machine_2",
+    "Assembling_machine_3"
+  ],
   "ingredients": [
     {
       "name": "Iron_plate",

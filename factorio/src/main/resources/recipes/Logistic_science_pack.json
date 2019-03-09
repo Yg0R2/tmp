@@ -1,7 +1,13 @@
 {
-  "name": "Logistic_science_pack",
+    "name": "Logistic_science_pack",
   "production": 1,
   "time": 6,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_1",
+    "Assembling_machine_2",
+    "Assembling_machine_3"
+  ],
   "ingredients": [
     {
       "name": "Transport_belt",

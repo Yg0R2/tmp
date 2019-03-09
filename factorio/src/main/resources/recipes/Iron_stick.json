@@ -1,21 +1,16 @@
 {
-  "name": "Grenade",
-  "production": 1,
-  "time": 8,
+  "name": "Iron_stick",
+  "production": 2,
+  "time": 0.5,
   "machineNames": [
     "Hand",
-    "Assembling_machine_1",
     "Assembling_machine_2",
     "Assembling_machine_3"
   ],
   "ingredients": [
     {
       "name": "Iron_plate",
-      "amount": 5
-    },
-    {
-      "name": "Coal",
-      "amount": 10
+      "amount": 1
     }
   ]
 }

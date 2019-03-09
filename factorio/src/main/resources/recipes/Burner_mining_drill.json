@@ -1,21 +1,24 @@
 {
-  "name": "Grenade",
+  "name": "Burner_mining_drill",
   "production": 1,
-  "time": 8,
+  "time": 2,
   "machineNames": [
     "Hand",
-    "Assembling_machine_1",
     "Assembling_machine_2",
     "Assembling_machine_3"
   ],
   "ingredients": [
     {
-      "name": "Iron_plate",
-      "amount": 5
+      "name": "Iron_gear_wheel",
+      "amount": 3
     },
     {
-      "name": "Coal",
-      "amount": 10
+      "name": "Iron_plate",
+      "amount": 3
+    },
+    {
+      "name": "Stone_furnace",
+      "amount": 1
     }
   ]
 }

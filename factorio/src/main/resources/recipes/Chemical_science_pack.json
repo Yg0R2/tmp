@@ -2,6 +2,11 @@
   "name": "Chemical_science_pack",
   "production": 2,
   "time": 24,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_2",
+    "Assembling_machine_3"
+  ],
   "ingredients": [
     {
       "name": "Advanced_circuit",

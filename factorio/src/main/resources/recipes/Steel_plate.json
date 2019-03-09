@@ -2,6 +2,11 @@
   "name": "Steel_plate",
   "production": 1,
   "time": 16,
+  "machineNames": [
+    "Stone_furnace",
+    "Steel_furnace",
+    "Electric_furnace"
+  ],
   "ingredients": [
     {
       "name": "Iron_plate",

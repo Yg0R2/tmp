@@ -2,6 +2,11 @@
   "name": "Military_science_pack",
   "production": 2,
   "time": 10,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_2",
+    "Assembling_machine_3"
+  ],
   "ingredients": [
     {
       "name": "Grenade",

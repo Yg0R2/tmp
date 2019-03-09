@@ -1,7 +1,7 @@
 {
-  "name": "Advanced_circuit",
+  "name": "Productivity_module",
   "production": 1,
-  "time": 6,
+  "time": 15,
   "machineNames": [
     "Hand",
     "Assembling_machine_2",
@@ -9,16 +9,12 @@
   ],
   "ingredients": [
     {
-      "name": "Copper_cable",
-      "amount": 4
+      "name": "Advanced_circuit",
+      "amount": 5
     },
     {
       "name": "Electronic_circuit",
-      "amount": 2
-    },
-    {
-      "name": "Plastic_bar",
-      "amount": 2
+      "amount": 5
     }
   ]
 }

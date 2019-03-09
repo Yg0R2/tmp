@@ -2,6 +2,11 @@
   "name": "Piercing_rounds_magazine",
   "production": 1,
   "time": 3,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_2",
+    "Assembling_machine_3"
+  ],
   "ingredients": [
     {
       "name": "Copper_plate",

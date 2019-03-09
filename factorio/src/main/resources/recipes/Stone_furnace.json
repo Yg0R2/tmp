@@ -1,7 +1,7 @@
 {
-  "name": "Grenade",
+  "name": "Stone_furnace",
   "production": 1,
-  "time": 8,
+  "time": 0.5,
   "machineNames": [
     "Hand",
     "Assembling_machine_1",
@@ -10,12 +10,8 @@
   ],
   "ingredients": [
     {
-      "name": "Iron_plate",
+      "name": "Stone",
       "amount": 5
-    },
-    {
-      "name": "Coal",
-      "amount": 10
     }
   ]
 }

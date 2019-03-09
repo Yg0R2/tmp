@@ -1,19 +1,20 @@
 package com.yg0r2.factorio.machine.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @JsonDeserialize(builder = Machine.Builder.class)
 public class Machine {
 
     private final String name;
     private final double craftingSpeed;
-    private final MachineType machineType;
 
     private Machine(Builder builder) {
         name = builder.name;
         craftingSpeed = builder.craftingSpeed;
-        machineType = builder.machineType;
     }
 
     public String getName() {
@@ -24,17 +25,25 @@ public class Machine {
         return craftingSpeed;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
 
-    public MachineType getMachineType() {
-        return machineType;
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
     public static class Builder {
 
         public String name;
         private double craftingSpeed;
-        @JsonProperty("type")
-        private MachineType machineType;
 
         public Builder withName(String name) {
             this.name = name;
@@ -44,12 +53,6 @@ public class Machine {
 
         public Builder withCraftingSpeed(double craftingSpeed) {
             this.craftingSpeed = craftingSpeed;
-
-            return this;
-        }
-
-        public Builder withMachineType(MachineType machineType) {
-            this.machineType = machineType;
 
             return this;
         }

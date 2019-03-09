@@ -1,0 +1,31 @@
+{
+  "name": "Oil_refinery",
+  "production": 1,
+  "time": 8,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_3"
+  ],
+  "ingredients": [
+    {
+      "name": "Electric_circuit",
+      "amount": 10
+    },
+    {
+      "name": "Iron_gear_wheel",
+      "amount": 10
+    },
+    {
+      "name": "Pipe",
+      "amount": 10
+    },
+    {
+      "name": "Steel_plate",
+      "amount": 15
+    },
+    {
+      "name": "Stone_brick",
+      "amount": 10
+    }
+  ]
+}

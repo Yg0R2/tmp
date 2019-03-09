@@ -2,6 +2,9 @@
   "name": "Solid_fuel",
   "production": 1,
   "time": 2,
+  "machineNames": [
+    "Chemical_plant"
+  ],
   "ingredients": [
     {
       "name": "Petroleum_gas",

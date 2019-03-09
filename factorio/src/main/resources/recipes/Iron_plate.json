@@ -1,5 +1,16 @@
 {
   "name": "Iron_plate",
   "production": 1,
-  "time": 3.2
+  "time": 3.2,
+  "machineNames": [
+    "Stone_furnace",
+    "Steel_furnace",
+    "Electric_furnace"
+  ],
+  "ingredients": [
+    {
+      "name": "Iron",
+      "amount": 1
+    }
+  ]
 }

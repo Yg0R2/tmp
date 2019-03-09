@@ -1,29 +1,24 @@
 package com.yg0r2.factorio.machine.service;
 
 import com.yg0r2.factorio.machine.domain.Machine;
-import com.yg0r2.factorio.machine.domain.MachineType;
+import com.yg0r2.factorio.machine.service.exceptions.MachineNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-@Component
+@Service
 public class MachineService {
 
     @Autowired
     private Map<String, Machine> machinesMap;
 
-    public Machine getByName(String name) {
-        return machinesMap.get(name);
-    }
-
-    public List<Machine> getByMachineType(MachineType machineType) {
-        return machinesMap.values().stream()
-            .filter(machine -> machine.getMachineType() == machineType)
-            .collect(Collectors.toList());
+    public Machine getByName(String machineName) {
+        return Optional.of(machineName)
+            .map(machinesMap::get)
+            .orElseThrow(() -> new MachineNotFoundException("Machine doesn't exist with name: " + machineName));
     }
 
 }

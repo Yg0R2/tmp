@@ -2,6 +2,12 @@
   "name": "Firearm_magazine",
   "production": 1,
   "time": 1,
+  "machineNames": [
+    "Hand",
+    "Assembling_machine_1",
+    "Assembling_machine_2",
+    "Assembling_machine_3"
+  ],
   "ingredients": [
     {
       "name": "Iron_plate",

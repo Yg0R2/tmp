@@ -1,23 +1,28 @@
 {
-  "name": "Engine_unit",
+  "name": "Chemical_plant",
   "production": 1,
-  "time": 10,
+  "time": 5,
   "machineNames": [
+    "Hand",
     "Assembling_machine_2",
     "Assembling_machine_3"
   ],
   "ingredients": [
     {
+      "name": "Electric_circuit",
+      "amount": 5
+    },
+    {
       "name": "Iron_gear_wheel",
-      "amount": 1
+      "amount": 5
     },
     {
       "name": "Pipe",
-      "amount": 2
+      "amount": 5
     },
     {
       "name": "Steel_plate",
-      "amount": 1
+      "amount": 5
     }
   ]
 }

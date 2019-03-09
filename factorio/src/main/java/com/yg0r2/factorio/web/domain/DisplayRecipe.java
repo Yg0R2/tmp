@@ -4,18 +4,19 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @JsonDeserialize(builder = DisplayRecipe.Builder.class)
 public class DisplayRecipe {
 
-    private String name;
-    private int assemblerCount;
-    private List<DisplayRecipe> recipes;
+    private final String name;
+    private final Map<String, Integer> machinesCountMap;
+    private final List<DisplayRecipe> recipes;
 
     private DisplayRecipe(Builder builder) {
         name = builder.name;
-        assemblerCount = builder.assemblerCount;
+        machinesCountMap = Map.copyOf(builder.machinesCountMap);
         recipes = Optional.ofNullable(builder.recipes).orElse(Collections.emptyList());
     }
 
@@ -23,8 +24,8 @@ public class DisplayRecipe {
         return name;
     }
 
-    public int getAssemblerCount() {
-        return assemblerCount;
+    public Map<String, Integer> getMachinesCountMap() {
+        return machinesCountMap;
     }
 
     public List<DisplayRecipe> getRecipes() {
@@ -34,7 +35,7 @@ public class DisplayRecipe {
     public static class Builder {
 
         private String name;
-        private int assemblerCount;
+        private Map<String, Integer> machinesCountMap;
         private List<DisplayRecipe> recipes;
 
         public Builder withName(String name) {
@@ -43,8 +44,8 @@ public class DisplayRecipe {
             return this;
         }
 
-        public Builder withAssemblerCount(int assemblerCount) {
-            this.assemblerCount = assemblerCount;
+        public Builder withMachinesCountMap(Map<String, Integer> machinesCountMap) {
+            this.machinesCountMap = machinesCountMap;
 
             return this;
         }

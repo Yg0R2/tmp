@@ -1,7 +1,7 @@
 {
-  "name": "Inserter",
-  "production": 1,
-  "time": 0.5,
+  "name": "Production_science_pack",
+  "production": 3,
+  "time": 21,
   "machineNames": [
     "Hand",
     "Assembling_machine_2",
@@ -9,16 +9,16 @@
   ],
   "ingredients": [
     {
-      "name": "Iron_plate",
+      "name": "Electric_furnace",
       "amount": 1
     },
     {
-      "name": "Electronic_circuit",
+      "name": "Productivity_module",
       "amount": 1
     },
     {
-      "name": "Iron_gear_wheel",
-      "amount": 1
+      "name": "Rail",
+      "amount": 30
     }
   ]
 }

@@ -2,6 +2,9 @@
   "name": "Plastic_bar",
   "production": 2,
   "time": 1,
+  "machineNames": [
+    "Chemical_plant"
+  ],
   "ingredients": [
     {
       "name": "Coal",

@@ -1,5 +1,9 @@
 {
   "name": "Petroleum_gas",
   "production": 5,
-  "time": 55
+  "time": 55,
+  "machineNames": [
+    "Oil_refinery",
+    "Chemical_plant"
+  ]
 }
