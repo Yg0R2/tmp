@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.yg0r2.bes.domain.EmailRequest;
+import com.yg0r2.bes.domain.BookingEmailRequest;
 import com.yg0r2.bes.domain.RequestContext;
 
 @Component
-public class EmailSender {
+public class BookingEmailRequestSender {
 
     @Value("${emailSender.host}")
     private String serviceHost;
@@ -22,12 +22,12 @@ public class EmailSender {
     @Autowired
     private RestTemplate emailSenderRestTemplate;
 
-    public ResponseEntity<String> sendEmail(EmailRequest emailRequest, RequestContext requestContext) {
-        return emailSenderRestTemplate.postForEntity(serviceHost + "/" + serviceEndpoint, createHttpEntity(emailRequest, requestContext), String.class);
+    public ResponseEntity<String> sendRequest(BookingEmailRequest bookingEmailRequest, RequestContext requestContext) {
+        return emailSenderRestTemplate.postForEntity(serviceHost + "/" + serviceEndpoint, createHttpEntity(bookingEmailRequest, requestContext), String.class);
     }
 
-    private HttpEntity<String> createHttpEntity(EmailRequest emailRequest, RequestContext requestContext) {
-        return new HttpEntity(emailRequest, createHttpHeaders(requestContext));
+    private HttpEntity<String> createHttpEntity(BookingEmailRequest bookingEmailRequest, RequestContext requestContext) {
+        return new HttpEntity(bookingEmailRequest, createHttpHeaders(requestContext));
     }
 
     private HttpHeaders createHttpHeaders(RequestContext requestContext) {

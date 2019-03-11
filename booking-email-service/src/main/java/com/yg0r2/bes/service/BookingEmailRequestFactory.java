@@ -3,10 +3,10 @@ package com.yg0r2.bes.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.yg0r2.bes.domain.EmailRequest;
+import com.yg0r2.bes.domain.BookingEmailRequest;
 
 @Component
-public class EmailRequestFactory {
+public class BookingEmailRequestFactory {
 
     @Autowired
     private MetaDataFactory metaDataFactory;
@@ -15,8 +15,8 @@ public class EmailRequestFactory {
     @Autowired
     private RecipientsFactory recipientsFactory;
 
-    public EmailRequest create(Long orderNumber, String lastName) {
-        return new EmailRequest.Builder()
+    public BookingEmailRequest create(Long orderNumber, String lastName) {
+        return new BookingEmailRequest.Builder()
             .withEmailType("orderConfirmationEmail")
             .withMetaData(metaDataFactory.create())
             .withOrder(orderFactory.create(orderNumber, lastName))

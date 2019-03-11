@@ -2,14 +2,14 @@ package com.yg0r2.bes.domain;
 
 import java.util.List;
 
-public class EmailRequest {
+public class BookingEmailRequest {
 
     private final String emailType;
     private final MetaData metaData;
     private final Order order;
     private final List<Recipient> recipients;
 
-    private EmailRequest(Builder builder) {
+    private BookingEmailRequest(Builder builder) {
         emailType = builder.emailType;
         metaData = builder.metaData;
         order = builder.order;
@@ -63,8 +63,8 @@ public class EmailRequest {
             return this;
         }
 
-        public EmailRequest build() {
-            return new EmailRequest(this);
+        public BookingEmailRequest build() {
+            return new BookingEmailRequest(this);
         }
     }
 }

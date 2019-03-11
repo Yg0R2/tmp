@@ -8,9 +8,6 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.yg0r2.bes.domain.EmailRequest;
-import com.yg0r2.bes.domain.MetaData;
-import com.yg0r2.bes.domain.Order;
 import com.yg0r2.bes.domain.Recipient;
 
 @Component
