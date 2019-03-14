@@ -15,4 +15,7 @@ allprojects {
         mavenLocal()
     }
 
+    dependencies {
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '+'
+    }
 }
