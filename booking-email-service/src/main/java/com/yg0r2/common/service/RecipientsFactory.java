@@ -1,14 +1,15 @@
-package com.yg0r2.bes.service;
+package com.yg0r2.common.service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.yg0r2.bes.domain.Recipient;
+import com.yg0r2.common.domain.Recipient;
 
 @Component
 public class RecipientsFactory {
@@ -18,12 +19,12 @@ public class RecipientsFactory {
     @Autowired
     private List<Recipient> recipients;
 
-    public List<Recipient> create() {
+    public Set<Recipient> create() {
         return Stream.of(recipients)
             .map(List::size)
             .map(RND::nextInt)
             .map(recipients::get)
-            .collect(Collectors.toList());
+            .collect(Collectors.toSet());
     }
 
 }

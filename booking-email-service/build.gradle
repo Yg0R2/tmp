@@ -5,6 +5,17 @@ springBoot {
 }
 
 dependencies {
+    implementation group: 'com.hotels.platform.config', name: 'configuration-domain', version: '+'
+    implementation group: 'com.hotels.platform.config', name: 'configuration-resolver', version: '+'
+    implementation group: 'com.hotels.config', name: 'common-config-pack', version: '+'
+    implementation group: 'hcom.foundation', name: 'messaging-service', version: '+'
+    implementation group: 'hcom.modules.gen', name: 'gen-common-service-api', version: '+'
+    implementation group: 'hcom.modules.gen', name: 'gen-es-confemail', version: '+'
+    implementation group: 'hcom.modules.gen', name: 'ws-stub-exacttarget', version: '+'
+
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.1'
+
     implementation group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: springBootVersion, ext: 'pom'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

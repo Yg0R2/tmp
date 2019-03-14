@@ -1,10 +1,10 @@
-package com.yg0r2.bes.service;
+package com.yg0r2.common.service;
 
 import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.yg0r2.bes.domain.RequestContext;
+import com.yg0r2.common.domain.RequestContext;
 
 @Component
 public class RequestContextFactory {

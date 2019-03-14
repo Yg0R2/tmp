@@ -1,3 +1,14 @@
-emailSender:
-  host: http://bookingemailrequestqueuefeederservice.staging.hcom
+application.title: "Test BookingEmailService"
+
+cf.config.service.packs: common-config-pack
+
+bes:
+  host: bookingemailrequestqueuefeederservice.staging.hcom
   endpoint: send/email
+  url: http://${bes.host}/${bes.endpoint}
+
+ces:
+  messageVersion: 1.0
+  host: confirmationemailsvc.staging.hcom
+  endpoint: email/confirmation
+  url: http://${ces.host}/${ces.endpoint}

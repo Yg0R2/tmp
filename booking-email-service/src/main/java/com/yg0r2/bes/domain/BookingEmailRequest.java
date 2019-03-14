@@ -1,19 +1,21 @@
 package com.yg0r2.bes.domain;
 
-import java.util.List;
+import java.util.Set;
+
+import com.yg0r2.common.domain.Recipient;
 
 public class BookingEmailRequest {
 
     private final String emailType;
     private final MetaData metaData;
     private final Order order;
-    private final List<Recipient> recipients;
+    private final Set<Recipient> recipients;
 
     private BookingEmailRequest(Builder builder) {
         emailType = builder.emailType;
         metaData = builder.metaData;
         order = builder.order;
-        recipients = List.copyOf(builder.recipients);
+        recipients = Set.copyOf(builder.recipients);
     }
 
     public String getEmailType() {
@@ -28,7 +30,7 @@ public class BookingEmailRequest {
         return order;
     }
 
-    public List<Recipient> getRecipients() {
+    public Set<Recipient> getRecipients() {
         return recipients;
     }
 
@@ -37,7 +39,7 @@ public class BookingEmailRequest {
         private String emailType;
         private MetaData metaData;
         private Order order;
-        private List<Recipient> recipients;
+        private Set<Recipient> recipients;
 
         public Builder withEmailType(String emailType) {
             this.emailType = emailType;
@@ -57,7 +59,7 @@ public class BookingEmailRequest {
             return this;
         }
 
-        public Builder withRecipients(List<Recipient> recipients) {
+        public Builder withRecipients(Set<Recipient> recipients) {
             this.recipients = recipients;
 
             return this;

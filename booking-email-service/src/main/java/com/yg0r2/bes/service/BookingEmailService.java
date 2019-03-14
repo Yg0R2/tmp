@@ -9,21 +9,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.yg0r2.bes.domain.BookingEmailRequest;
-import com.yg0r2.bes.domain.RequestContext;
+import com.yg0r2.common.domain.RequestContext;
 
 @Component
-public class BookingEmailRequestSender {
+public class BookingEmailService {
 
-    @Value("${emailSender.host}")
-    private String serviceHost;
-    @Value("${emailSender.endpoint}")
-    private String serviceEndpoint;
+    @Value("${bes.url}")
+    private String serviceUrl;
 
     @Autowired
-    private RestTemplate emailSenderRestTemplate;
+    private RestTemplate besRestTemplate;
 
     public ResponseEntity<String> sendRequest(BookingEmailRequest bookingEmailRequest, RequestContext requestContext) {
-        return emailSenderRestTemplate.postForEntity(serviceHost + "/" + serviceEndpoint, createHttpEntity(bookingEmailRequest, requestContext), String.class);
+        return besRestTemplate.postForEntity(serviceUrl, createHttpEntity(bookingEmailRequest, requestContext), String.class);
     }
 
     private HttpEntity<String> createHttpEntity(BookingEmailRequest bookingEmailRequest, RequestContext requestContext) {

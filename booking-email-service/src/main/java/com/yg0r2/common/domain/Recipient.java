@@ -1,5 +1,8 @@
-package com.yg0r2.bes.domain;
+package com.yg0r2.common.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(builder = Recipient.Builder.class)
 public class Recipient {
 
     private final String emailAddress;

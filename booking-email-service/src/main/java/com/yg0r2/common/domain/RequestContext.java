@@ -1,4 +1,4 @@
-package com.yg0r2.bes.domain;
+package com.yg0r2.common.domain;
 
 import java.util.UUID;
 

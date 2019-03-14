@@ -1,4 +1,4 @@
-package com.yg0r2.bes;
+package com.yg0r2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

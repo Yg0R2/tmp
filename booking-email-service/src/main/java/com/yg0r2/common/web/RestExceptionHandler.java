@@ -1,4 +1,4 @@
-package com.yg0r2.bes.web;
+package com.yg0r2.common.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

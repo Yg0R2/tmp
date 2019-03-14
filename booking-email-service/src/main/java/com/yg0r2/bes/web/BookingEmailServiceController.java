@@ -16,28 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yg0r2.bes.domain.BookingEmailRequest;
 import com.yg0r2.bes.service.BookingEmailRequestFactory;
-import com.yg0r2.bes.service.BookingEmailRequestSender;
-import com.yg0r2.bes.service.RequestContextFactory;
+import com.yg0r2.bes.service.BookingEmailService;
+import com.yg0r2.common.service.RequestContextFactory;
 
 @RestController
-public class RequestGeneratorController {
+public class BookingEmailServiceController {
 
     @Autowired
     private BookingEmailRequestFactory bookingEmailRequestFactory;
     @Autowired
     private RequestContextFactory requestContextFactory;
     @Autowired
-    private BookingEmailRequestSender bookingEmailRequestSender;
+    private BookingEmailService bookingEmailService;
 
-    @GetMapping(value = "/")
-    public String get() {
-        return "/api/send?count={Integer}[&orderNumber={Long}&lastName={LAST_NAME}]";
-    }
-
-    @GetMapping(value = "/api/generate", params = "count")
+    @GetMapping(value = "/api/bes/generate", params = "count")
     public ResponseEntity<?> generateRequests(@Valid @Min(1) @RequestParam int count, @Nullable Long orderNumber, @Nullable String lastName) {
             List<String> responses = getRequests(count, orderNumber, lastName).stream()
-                .map(emailRequest -> bookingEmailRequestSender.sendRequest(emailRequest, requestContextFactory.create()))
+                .map(emailRequest -> bookingEmailService.sendRequest(emailRequest, requestContextFactory.create()))
                 .map(ResponseEntity::getBody)
                 .collect(Collectors.toList());
 

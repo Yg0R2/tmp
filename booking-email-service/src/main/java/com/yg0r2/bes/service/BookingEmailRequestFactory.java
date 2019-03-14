@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.yg0r2.bes.domain.BookingEmailRequest;
+import com.yg0r2.common.service.RecipientsFactory;
 
 @Component
 public class BookingEmailRequestFactory {
