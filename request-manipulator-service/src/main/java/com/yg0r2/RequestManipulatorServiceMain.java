@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookingEmailServiceMain {
+public class RequestManipulatorServiceMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(BookingEmailServiceMain.class, args);
+        SpringApplication.run(RequestManipulatorServiceMain.class, args);
     }
 
 }
