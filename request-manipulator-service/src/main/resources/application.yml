@@ -1,4 +1,4 @@
-application.title: "Test BookingEmailService"
+application.title: "RequestManipulatorService"
 
 cf.config.service.packs: common-config-pack
 
