@@ -1,0 +1,20 @@
+{
+  "emailType": "orderConfirmationEmail",
+  "requestContext": {
+    "locale": "en_US",
+    "brand": "hotels.com",
+    "pointOfSale": "HCOM_US"
+  },
+  "order": {
+    "customerLastName": "Odinson-xby",
+    "orderNumber": 8141542976707
+  },
+  "recipients": [
+    {
+      "emailAddress": "v-akajzer@hotels.com"
+    }
+  ],
+  "metaData": {
+    "emailOrigin": "T_TR_CONF_RESEND_CONF_PAGE"
+  }
+}

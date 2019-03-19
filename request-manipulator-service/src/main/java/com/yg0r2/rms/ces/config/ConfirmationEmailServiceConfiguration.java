@@ -1,4 +1,4 @@
-package com.yg0r2.rms.ces.service.config;
+package com.yg0r2.rms.ces.config;
 
 import java.util.List;
 

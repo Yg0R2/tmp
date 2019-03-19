@@ -2,6 +2,11 @@ application.title: "RequestManipulatorService"
 
 cf.config.service.packs: common-config-pack
 
+beres:
+  host: www.staging1-hotels.com
+  endpoint: resend/mail.html
+  url: https://${beres.host}/${beres.endpoint}
+
 bes:
   host: bookingemailrequestqueuefeederservice.staging.hcom
   endpoint: send/email

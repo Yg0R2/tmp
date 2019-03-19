@@ -1,4 +1,4 @@
-package com.yg0r2.rms.bes.service.config;
+package com.yg0r2.rms.bes.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
