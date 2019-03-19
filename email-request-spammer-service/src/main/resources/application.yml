@@ -1,0 +1,19 @@
+application.title: "EmailREquestSpammerService"
+
+cf.config.service.packs: common-config-pack
+
+beres:
+  host: www.staging1-hotels.com
+  endpoint: resend/mail.html
+  url: https://${beres.host}/${beres.endpoint}
+
+bes:
+  host: bookingemailrequestqueuefeederservice.staging.hcom
+  endpoint: send/email
+  url: http://${bes.host}/${bes.endpoint}
+
+ces:
+  messageVersion: 1.0
+  host: confirmationemailsvc.staging.hcom
+  endpoint: email/confirmation
+  url: http://${ces.host}/${ces.endpoint}

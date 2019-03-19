@@ -7,6 +7,6 @@ pluginManagement {
 rootProject.name = 'tmp'
 include 'circuit-breaker-hystrix'
 include 'circuit-breaker-thermos'
-include 'request-manipulator-service'
+include 'email-request-spammer-service'
 include 'factorio'
 
