@@ -12,7 +12,7 @@ import com.hotels.services.eventservice.confemail.content.ConfirmationEmailMessa
 import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
 
 @Component
-class ConfirmationEmailMessageTransformer {
+public class ConfirmationEmailMessageTransformer {
 
     @Autowired
     private CreateRequestTransformer createRequestTransformer;

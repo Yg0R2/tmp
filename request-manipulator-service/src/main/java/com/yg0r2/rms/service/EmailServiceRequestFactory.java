@@ -1,7 +1,6 @@
 package com.yg0r2.rms.service;
 
 import com.yg0r2.rms.domain.EmailRequest;
-import com.yg0r2.rms.service.ResourcesUtils;
 
 public class EmailServiceRequestFactory<T extends EmailRequest> {
 

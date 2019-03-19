@@ -16,12 +16,11 @@ import com.yg0r2.rms.domain.EmailResponse;
 import com.yg0r2.rms.domain.RequestContext;
 import com.yg0r2.rms.service.EmailService;
 
-@Service
 public class ConfirmationEmailService extends EmailService<ConfirmationEmailServiceRequest, EventServiceConfirmationEmailResponse> {
 
     private final ConfirmationEmailMessageTransformer confirmationEmailMessageTransformer;
 
-    ConfirmationEmailService(@Value("${ces.url}") String serviceUrl, RestTemplate cesRestTemplate, ConfirmationEmailMessageTransformer confirmationEmailMessageTransformer) {
+    public ConfirmationEmailService(String serviceUrl, RestTemplate cesRestTemplate, ConfirmationEmailMessageTransformer confirmationEmailMessageTransformer) {
         super(serviceUrl, cesRestTemplate, EventServiceConfirmationEmailResponse.class);
 
         this.confirmationEmailMessageTransformer = confirmationEmailMessageTransformer;
@@ -32,7 +31,7 @@ public class ConfirmationEmailService extends EmailService<ConfirmationEmailServ
         ResponseEntity<EventServiceConfirmationEmailResponse> response = postForEntity(confirmationEmailServiceRequest);
 
         return new EmailResponse.Builder()
-            .withRequestId(response.getBody().getMessageEnvelope().getId())
+            .withRequestId(response.getBody().getRequestMessageEnvelope().getId())
             .build();
     }
 

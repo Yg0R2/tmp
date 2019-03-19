@@ -16,8 +16,14 @@ import com.hotels.messaging.core.ConfigurableMessageFactory;
 import com.hotels.services.common.messaging.v20100812.Error;
 import com.hotels.services.common.messaging.v20100812.MessageEnvelope;
 import com.hotels.services.eventservice.confemail.content.ConfirmationEmailMessage;
+import com.hotels.services.eventservice.confemail.response.EventServiceConfirmationEmailResponse;
 import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
+import com.yg0r2.rms.ces.service.ConfirmationEmailMessageTransformer;
+import com.yg0r2.rms.ces.service.ConfirmationEmailService;
+import com.yg0r2.rms.service.EmailService;
+import com.yg0r2.rms.service.EmailServiceCallable;
 import com.yg0r2.rms.service.EmailServiceRequestFactory;
+import com.yg0r2.rms.service.EmailServiceSpammer;
 import com.yg0r2.rms.service.ResourcesUtils;
 
 @Configuration
@@ -29,19 +35,13 @@ public class ConfirmationEmailServiceConfiguration {
     private String applicationTitle;
     @Value("${ces.messageVersion}")
     private String messageVersion;
+    @Value("${ces.url}")
+    private String serviceUrl;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Bean
-    public RestTemplate cesRestTemplate() {
-        return new RestTemplate(List.of(new Jaxb2RootElementHttpMessageConverter()));
-    }
-
-    @Bean
-    public EmailServiceRequestFactory<ConfirmationEmailServiceRequest> confirmationEmailServiceRequestFactory() {
-        return new EmailServiceRequestFactory<>(cesResourceUtils(), CONFIRMATION_EMAIL_SERVICE_REQUEST_JSON);
-    }
+    @Autowired
+    private ConfirmationEmailMessageTransformer confirmationEmailMessageTransformer;
 
     @Bean
     public MessageFactory<ConfirmationEmailMessage, Error> messageFactory() {
@@ -56,8 +56,29 @@ public class ConfirmationEmailServiceConfiguration {
         return configurableMessageFactory;
     }
 
+    @Bean
+    public EmailServiceSpammer cesSpammer() {
+        return new EmailServiceSpammer(cesCallable());
+    }
+
+    private EmailServiceCallable<ConfirmationEmailServiceRequest, EventServiceConfirmationEmailResponse> cesCallable() {
+        return new EmailServiceCallable<>(cesRequestFactory(), cesEmailService());
+    }
+
+    private EmailServiceRequestFactory<ConfirmationEmailServiceRequest> cesRequestFactory() {
+        return new EmailServiceRequestFactory<>(cesResourceUtils(), CONFIRMATION_EMAIL_SERVICE_REQUEST_JSON);
+    }
+
     private ResourcesUtils<ConfirmationEmailServiceRequest> cesResourceUtils() {
         return new ResourcesUtils<>(new TypeReference<>() {}, objectMapper);
+    }
+
+    private EmailService<ConfirmationEmailServiceRequest, EventServiceConfirmationEmailResponse> cesEmailService() {
+        return new ConfirmationEmailService(serviceUrl, cesRestTemplate(), confirmationEmailMessageTransformer);
+    }
+
+    private RestTemplate cesRestTemplate() {
+        return new RestTemplate(List.of(new Jaxb2RootElementHttpMessageConverter()));
     }
 
 }
