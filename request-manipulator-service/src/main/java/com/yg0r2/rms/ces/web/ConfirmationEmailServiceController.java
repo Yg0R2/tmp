@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hotels.services.eventservice.confemail.response.EventServiceConfirmationEmailResponse;
 import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
-import com.yg0r2.rms.ces.service.ConfirmationEmailServiceRequestFactory;
 import com.yg0r2.rms.domain.EmailResponse;
 import com.yg0r2.rms.service.EmailService;
+import com.yg0r2.rms.service.EmailServiceRequestFactory;
 
 @RestController
 public class ConfirmationEmailServiceController {
 
     @Autowired
-    private ConfirmationEmailServiceRequestFactory confirmationEmailServiceRequestFactory;
+    private EmailServiceRequestFactory<ConfirmationEmailServiceRequest> confirmationEmailServiceRequestFactory;
     @Autowired
     private EmailService<ConfirmationEmailServiceRequest, EventServiceConfirmationEmailResponse> confirmationEmailService;
 

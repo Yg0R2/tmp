@@ -17,10 +17,13 @@ import com.hotels.services.common.messaging.v20100812.Error;
 import com.hotels.services.common.messaging.v20100812.MessageEnvelope;
 import com.hotels.services.eventservice.confemail.content.ConfirmationEmailMessage;
 import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
+import com.yg0r2.rms.service.EmailServiceRequestFactory;
 import com.yg0r2.rms.service.ResourcesUtils;
 
 @Configuration
 public class ConfirmationEmailServiceConfiguration {
+
+    private static final String CONFIRMATION_EMAIL_SERVICE_REQUEST_JSON = "classpath:CES_request.json";
 
     @Value("${application.title}")
     private String applicationTitle;
@@ -36,8 +39,8 @@ public class ConfirmationEmailServiceConfiguration {
     }
 
     @Bean
-    public ResourcesUtils<ConfirmationEmailServiceRequest> cesResourceUtils() {
-        return new ResourcesUtils<>(new TypeReference<>() {}, objectMapper);
+    public EmailServiceRequestFactory<ConfirmationEmailServiceRequest> confirmationEmailServiceRequestFactory() {
+        return new EmailServiceRequestFactory<>(cesResourceUtils(), CONFIRMATION_EMAIL_SERVICE_REQUEST_JSON);
     }
 
     @Bean
@@ -51,6 +54,10 @@ public class ConfirmationEmailServiceConfiguration {
         configurableMessageFactory.setVersion(messageVersion);
 
         return configurableMessageFactory;
+    }
+
+    private ResourcesUtils<ConfirmationEmailServiceRequest> cesResourceUtils() {
+        return new ResourcesUtils<>(new TypeReference<>() {}, objectMapper);
     }
 
 }

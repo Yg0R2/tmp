@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yg0r2.rms.bes.domain.BookingEmailServiceRequest;
-import com.yg0r2.rms.bes.service.BookingEmailServiceRequestFactory;
 import com.yg0r2.rms.domain.EmailResponse;
 import com.yg0r2.rms.service.EmailService;
+import com.yg0r2.rms.service.EmailServiceRequestFactory;
 
 @RestController
 public class BookingEmailServiceController {
 
     @Autowired
-    private BookingEmailServiceRequestFactory bookingEmailServiceRequestFactory;
+    private EmailServiceRequestFactory<BookingEmailServiceRequest> bookingEmailServiceRequestFactory;
     @Autowired
     private EmailService<BookingEmailServiceRequest, EmailResponse> bookingEmailService;
 
