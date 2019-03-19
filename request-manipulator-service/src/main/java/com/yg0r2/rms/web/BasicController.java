@@ -1,4 +1,4 @@
-package com.yg0r2.rms.common.web;
+package com.yg0r2.rms.web;
 
 import java.util.List;
 

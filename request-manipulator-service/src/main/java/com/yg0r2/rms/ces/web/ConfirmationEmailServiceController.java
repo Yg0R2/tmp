@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yg0r2.rms.ces.service.ConfirmationEmailService;
+import com.hotels.services.eventservice.confemail.response.EventServiceConfirmationEmailResponse;
+import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
 import com.yg0r2.rms.ces.service.ConfirmationEmailServiceRequestFactory;
+import com.yg0r2.rms.domain.EmailResponse;
+import com.yg0r2.rms.service.EmailService;
 
 @RestController
 public class ConfirmationEmailServiceController {
@@ -22,11 +25,11 @@ public class ConfirmationEmailServiceController {
     @Autowired
     private ConfirmationEmailServiceRequestFactory confirmationEmailServiceRequestFactory;
     @Autowired
-    private ConfirmationEmailService confirmationEmailService;
+    private EmailService<ConfirmationEmailServiceRequest, EventServiceConfirmationEmailResponse> confirmationEmailService;
 
     @GetMapping(value = "/api/ces/generate", params = "count")
-    public ResponseEntity<?> sendEmails(@Valid @Min(1) @RequestParam int count) {
-        List<?> responses = IntStream.range(0, count)
+    public ResponseEntity<?> generateRequests(@Valid @Min(1) @RequestParam int count) {
+        List<EmailResponse> responses = IntStream.range(0, count)
             .mapToObj(i -> confirmationEmailServiceRequestFactory.create())
             .map(confirmationEmailService::sendRequest)
             .collect(Collectors.toList());

@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yg0r2.rms.bes.domain.BookingEmailServiceRequest;
-import com.yg0r2.rms.common.service.ResourcesUtils;
+import com.yg0r2.rms.service.ResourcesUtils;
 
 @Configuration
 public class BookingEmailServiceConfiguration {

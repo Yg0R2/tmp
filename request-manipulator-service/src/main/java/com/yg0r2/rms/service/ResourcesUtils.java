@@ -1,4 +1,4 @@
-package com.yg0r2.rms.common.service;
+package com.yg0r2.rms.service;
 
 import java.io.IOException;
 import java.net.URL;

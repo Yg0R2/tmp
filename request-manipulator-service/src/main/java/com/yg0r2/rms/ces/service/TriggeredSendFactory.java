@@ -16,10 +16,10 @@ import com.exacttarget.wsdl.partnerapi.v2.TriggeredSend;
 import com.exacttarget.wsdl.partnerapi.v2.TriggeredSendDefinition;
 import com.hotels.platform.config.domain.Context;
 import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
-import com.yg0r2.rms.common.domain.Recipient;
-import com.yg0r2.rms.common.domain.RequestContext;
 import com.yg0r2.rms.configresolver.service.ConfigurationResolver;
 import com.yg0r2.rms.configresolver.service.ContextTransformer;
+import com.yg0r2.rms.domain.Recipient;
+import com.yg0r2.rms.domain.RequestContext;
 
 @Component
 class TriggeredSendFactory {

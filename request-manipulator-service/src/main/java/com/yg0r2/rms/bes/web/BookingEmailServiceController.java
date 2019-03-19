@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yg0r2.rms.bes.domain.BookingEmailServiceRequest;
 import com.yg0r2.rms.bes.service.BookingEmailServiceRequestFactory;
-import com.yg0r2.rms.bes.service.BookingEmailService;
+import com.yg0r2.rms.domain.EmailResponse;
+import com.yg0r2.rms.service.EmailService;
 
 @RestController
 public class BookingEmailServiceController {
@@ -22,14 +24,13 @@ public class BookingEmailServiceController {
     @Autowired
     private BookingEmailServiceRequestFactory bookingEmailServiceRequestFactory;
     @Autowired
-    private BookingEmailService bookingEmailService;
+    private EmailService<BookingEmailServiceRequest, EmailResponse> bookingEmailService;
 
     @GetMapping(value = "/api/bes/generate", params = "count")
     public ResponseEntity<?> generateRequests(@Valid @Min(1) @RequestParam int count) {
-        List<String> responses = IntStream.range(0, count)
+        List<EmailResponse> responses = IntStream.range(0, count)
             .mapToObj(i -> bookingEmailServiceRequestFactory.create())
-            .map(emailRequest -> bookingEmailService.sendRequest(emailRequest))
-            .map(ResponseEntity::getBody)
+            .map(bookingEmailService::sendRequest)
             .collect(Collectors.toList());
 
         return ResponseEntity.ok(responses);

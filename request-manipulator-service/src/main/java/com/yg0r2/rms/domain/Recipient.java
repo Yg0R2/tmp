@@ -1,4 +1,4 @@
-package com.yg0r2.rms.common.domain;
+package com.yg0r2.rms.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 

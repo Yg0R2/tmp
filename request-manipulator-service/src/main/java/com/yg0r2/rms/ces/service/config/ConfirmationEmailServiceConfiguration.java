@@ -17,7 +17,7 @@ import com.hotels.services.common.messaging.v20100812.Error;
 import com.hotels.services.common.messaging.v20100812.MessageEnvelope;
 import com.hotels.services.eventservice.confemail.content.ConfirmationEmailMessage;
 import com.yg0r2.rms.ces.domain.ConfirmationEmailServiceRequest;
-import com.yg0r2.rms.common.service.ResourcesUtils;
+import com.yg0r2.rms.service.ResourcesUtils;
 
 @Configuration
 public class ConfirmationEmailServiceConfiguration {

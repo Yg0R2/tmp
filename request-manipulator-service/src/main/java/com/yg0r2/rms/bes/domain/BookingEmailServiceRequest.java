@@ -5,11 +5,12 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.yg0r2.rms.common.domain.Recipient;
-import com.yg0r2.rms.common.domain.RequestContext;
+import com.yg0r2.rms.domain.EmailRequest;
+import com.yg0r2.rms.domain.Recipient;
+import com.yg0r2.rms.domain.RequestContext;
 
 @JsonDeserialize(builder = BookingEmailServiceRequest.Builder.class)
-public class BookingEmailServiceRequest {
+public class BookingEmailServiceRequest implements EmailRequest {
 
     private final String emailType;
     private final long timeStamp;

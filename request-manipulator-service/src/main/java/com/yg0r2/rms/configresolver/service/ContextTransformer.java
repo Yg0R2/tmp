@@ -3,7 +3,7 @@ package com.yg0r2.rms.configresolver.service;
 import org.springframework.stereotype.Component;
 
 import com.hotels.platform.config.domain.Context;
-import com.yg0r2.rms.common.domain.RequestContext;
+import com.yg0r2.rms.domain.RequestContext;
 
 @Component
 public class ContextTransformer {

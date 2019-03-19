@@ -10,11 +10,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.yg0r2.rms.common.domain.Recipient;
-import com.yg0r2.rms.common.domain.RequestContext;
+import com.yg0r2.rms.domain.EmailRequest;
+import com.yg0r2.rms.domain.Recipient;
+import com.yg0r2.rms.domain.RequestContext;
 
 @JsonDeserialize(builder = ConfirmationEmailServiceRequest.Builder.class)
-public class ConfirmationEmailServiceRequest {
+public class ConfirmationEmailServiceRequest implements EmailRequest {
 
     private final UUID requestId;
     private final String conversationId;

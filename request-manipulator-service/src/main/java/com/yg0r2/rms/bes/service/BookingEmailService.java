@@ -2,35 +2,30 @@ package com.yg0r2.rms.bes.service;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.yg0r2.rms.bes.domain.BookingEmailServiceRequest;
-import com.yg0r2.rms.common.domain.RequestContext;
+import com.yg0r2.rms.domain.EmailResponse;
+import com.yg0r2.rms.domain.RequestContext;
+import com.yg0r2.rms.service.EmailService;
 
-@Component
-public class BookingEmailService {
+@Service
+public class BookingEmailService extends EmailService<BookingEmailServiceRequest, EmailResponse> {
 
-    @Value("${bes.url}")
-    private String serviceUrl;
-
-    @Autowired
-    private RestTemplate besRestTemplate;
-
-    public ResponseEntity<String> sendRequest(BookingEmailServiceRequest bookingEmailServiceRequest) {
-        return besRestTemplate.postForEntity(serviceUrl, createHttpEntity(bookingEmailServiceRequest), String.class);
+    BookingEmailService(@Value("${bes.url}") String serviceUrl, RestTemplate besRestTemplate) {
+        super(serviceUrl, besRestTemplate, EmailResponse.class);
     }
 
-    private HttpEntity<String> createHttpEntity(BookingEmailServiceRequest bookingEmailServiceRequest) {
-        return new HttpEntity(bookingEmailServiceRequest, createHttpHeaders(bookingEmailServiceRequest.getRequestId(), bookingEmailServiceRequest.getRequestContext()));
+    @Override
+    public EmailResponse sendRequest(BookingEmailServiceRequest emailRequest) {
+        return postForEntity(emailRequest).getBody();
     }
 
-    private HttpHeaders createHttpHeaders(UUID requestId, RequestContext requestContext) {
+    @Override
+    protected HttpHeaders createHttpHeaders(UUID requestId, RequestContext requestContext) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.set("Request-Context-Brand", requestContext.getBrand());
