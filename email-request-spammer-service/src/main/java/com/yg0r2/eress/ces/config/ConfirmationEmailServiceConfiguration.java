@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,9 +40,11 @@ public class ConfirmationEmailServiceConfiguration {
     private String serviceUrl;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private ClientHttpRequestFactory clientHttpRequestFactory;
     @Autowired
     private ConfirmationEmailMessageTransformer confirmationEmailMessageTransformer;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Bean
     public MessageFactory<ConfirmationEmailMessage, Error> messageFactory() {
@@ -78,7 +81,11 @@ public class ConfirmationEmailServiceConfiguration {
     }
 
     private RestTemplate cesRestTemplate() {
-        return new RestTemplate(List.of(new Jaxb2RootElementHttpMessageConverter()));
+        RestTemplate restTemplate = new RestTemplate(List.of(new Jaxb2RootElementHttpMessageConverter()));
+
+        restTemplate.setRequestFactory(clientHttpRequestFactory);
+
+        return restTemplate;
     }
 
 }

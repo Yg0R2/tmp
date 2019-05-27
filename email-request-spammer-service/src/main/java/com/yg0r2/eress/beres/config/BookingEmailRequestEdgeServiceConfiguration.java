@@ -1,4 +1,4 @@
-package com.yg0r2.eress.config;
+package com.yg0r2.eress.beres.config;
 
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;

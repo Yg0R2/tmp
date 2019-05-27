@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,10 +12,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yg0r2.eress.bes.domain.BookingEmailServiceRequest;
 import com.yg0r2.eress.bes.service.BookingEmailService;
 import com.yg0r2.eress.domain.EmailResponse;
-import com.yg0r2.eress.service.EmailServiceCallable;
-import com.yg0r2.eress.service.EmailServiceSpammer;
 import com.yg0r2.eress.service.EmailService;
+import com.yg0r2.eress.service.EmailServiceCallable;
 import com.yg0r2.eress.service.EmailServiceRequestFactory;
+import com.yg0r2.eress.service.EmailServiceSpammer;
 import com.yg0r2.eress.service.ResourcesUtils;
 
 @Configuration
@@ -25,6 +26,8 @@ public class BookingEmailServiceConfiguration {
     @Value("${bes.url}")
     private String serviceUrl;
 
+    @Autowired
+    private ClientHttpRequestFactory clientHttpRequestFactory;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -50,7 +53,7 @@ public class BookingEmailServiceConfiguration {
     }
 
     private RestTemplate besRestTemplate() {
-        return new RestTemplate();
+        return new RestTemplate(clientHttpRequestFactory);
     }
 
 }

@@ -18,17 +18,24 @@ public class EmailServiceSpammer {
     }
 
     public List<EmailResponse> spam(int count) {
-        ExecutorService executorService = Executors.newFixedThreadPool(count);
+        ExecutorService executorService = Executors.newFixedThreadPool(20);
 
-        List<Future<EmailResponse>> futureResponses = IntStream.range(0, count)
-            .mapToObj(i -> executorService.submit(emailServiceCallable))
-            .collect(Collectors.toList());
+        List<EmailResponse> responses;
+        try {
+            List<Future<EmailResponse>> futureResponses = IntStream.range(0, count)
+                .mapToObj(i -> executorService.submit(emailServiceCallable))
+                .collect(Collectors.toList());
 
-        List<EmailResponse> responses = futureResponses.stream()
-            .map(this::getResponse)
-            .collect(Collectors.toList());
-
-        executorService.shutdown();
+            responses = futureResponses.stream()
+                .map(this::getResponse)
+                .parallel()
+                .collect(Collectors.toList());
+        }
+        finally {
+            if (!executorService.isShutdown()) {
+                executorService.shutdown();
+            }
+        }
 
         return responses;
     }
