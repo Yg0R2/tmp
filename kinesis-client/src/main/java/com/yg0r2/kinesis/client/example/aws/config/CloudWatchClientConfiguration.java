@@ -4,11 +4,8 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
@@ -26,14 +23,13 @@ class CloudWatchClientConfiguration {
     @Autowired
     private SdkAsyncHttpClient sdkAsyncHttpClient;
     @Autowired
-    private AwsCredentialsProvider awsCredentialsProvider;
+    private AwsCredentialsProvider awsSdkCredentialsProvider;
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
     CloudWatchAsyncClient cloudWatchAsyncClient() {
         return CloudWatchAsyncClient.builder()
             .region(Region.of(region))
-            .credentialsProvider(awsCredentialsProvider)
+            .credentialsProvider(awsSdkCredentialsProvider)
             .httpClient(sdkAsyncHttpClient)
             .endpointOverride(URI.create(cloudWatchEndpoint))
             .build();

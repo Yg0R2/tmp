@@ -24,7 +24,7 @@ public class KinesisStreamInitializerCommandLineRunner implements CommandLineRun
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisStreamInitializerCommandLineRunner.class);
 
-    @Value("${aws.kinesis.stream.startup.timeout.ms}")
+    @Value("${aws.kinesis.stream.startupTimeoutInMillis}")
     private long startupTimeout;
 
     @Value("${aws.kinesis.stream.fastLane.name}")

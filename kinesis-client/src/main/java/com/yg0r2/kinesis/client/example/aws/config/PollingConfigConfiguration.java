@@ -11,6 +11,10 @@ import software.amazon.kinesis.retrieval.polling.PollingConfig;
 @Configuration
 class PollingConfigConfiguration {
 
+    @Value("${aws.kinesis.stream.maxRecordCount}")
+    private int maxRecordCount;
+    @Value("${aws.kinesis.stream.idleTimeBetweenReadsInMillis}")
+    private long idleTimeBetweenReads;
     @Value("${aws.kinesis.stream.fastLane.name}")
     private String streamName;
 
@@ -21,7 +25,8 @@ class PollingConfigConfiguration {
     PollingConfig pollingConfig() {
         PollingConfig pollingConfig = new PollingConfig(streamName, kinesisAsyncClient);
 
-        pollingConfig.maxRecords(1);
+        pollingConfig.idleTimeBetweenReadsInMillis(idleTimeBetweenReads);
+        pollingConfig.maxRecords(maxRecordCount);
 
         return pollingConfig;
     }

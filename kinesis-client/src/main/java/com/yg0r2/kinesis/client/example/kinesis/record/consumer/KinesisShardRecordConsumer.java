@@ -1,8 +1,16 @@
-package com.yg0r2.kinesis.client.example.kinesis;
+package com.yg0r2.kinesis.client.example.kinesis.record.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
+
+import com.yg0r2.kinesis.client.example.kinesis.record.KinesisRecordDeserializer;
 
 import software.amazon.kinesis.exceptions.InvalidStateException;
 import software.amazon.kinesis.exceptions.ShutdownException;
@@ -12,12 +20,18 @@ import software.amazon.kinesis.lifecycle.events.ProcessRecordsInput;
 import software.amazon.kinesis.lifecycle.events.ShardEndedInput;
 import software.amazon.kinesis.lifecycle.events.ShutdownRequestedInput;
 import software.amazon.kinesis.processor.ShardRecordProcessor;
-import software.amazon.kinesis.retrieval.KinesisClientRecord;
 
-public class KinesisShardRecordProcessor implements ShardRecordProcessor {
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class KinesisShardRecordConsumer implements ShardRecordProcessor {
 
     private static final String SHARD_ID_MDC_KEY = "ShardId";
-    private static final Logger LOGGER = LoggerFactory.getLogger(KinesisShardRecordProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KinesisShardRecordConsumer.class);
+
+    @Autowired
+    private ThreadPoolTaskExecutor consumerThreadPoolTaskExecutor;
+    @Autowired
+    private KinesisRecordDeserializer kinesisRecordDeserializer;
 
     private String shardId;
 
@@ -40,9 +54,14 @@ public class KinesisShardRecordProcessor implements ShardRecordProcessor {
         MDC.put(SHARD_ID_MDC_KEY, shardId);
 
         try {
-            LOGGER.info("Processing {} record(s)", processRecordsInput.records().size());
-            processRecordsInput.records()
-                .forEach(r -> executeProcessRecord(r));
+            LOGGER.info("Consuming {} record(s)", processRecordsInput.records().size());
+
+            processRecordsInput.records().stream()
+                .map(kinesisRecordDeserializer::deserialize)
+                .map(KinesisRecordConsumerRunnable::new)
+                .forEach(consumerThreadPoolTaskExecutor::execute);
+
+            processRecordsInput.checkpointer().checkpoint();
         }
         catch (Throwable t) {
             LOGGER.error("Caught throwable while processing records. Aborting.");
@@ -94,16 +113,6 @@ public class KinesisShardRecordProcessor implements ShardRecordProcessor {
         }
         finally {
             MDC.remove(SHARD_ID_MDC_KEY);
-        }
-    }
-
-    private void executeProcessRecord(KinesisClientRecord r) {
-        LOGGER.info("Processing record pk: {} -- Seq: {}", r.partitionKey(), r.sequenceNumber());
-
-        try {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e) {
         }
     }
 

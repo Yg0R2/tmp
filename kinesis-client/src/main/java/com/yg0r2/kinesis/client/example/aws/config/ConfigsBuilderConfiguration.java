@@ -4,13 +4,10 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 
-import com.yg0r2.kinesis.client.example.kinesis.KinesisShardRecordProcessorFactory;
+import com.yg0r2.kinesis.client.example.kinesis.record.consumer.KinesisShardRecordConsumerFactory;
 
 import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
@@ -33,12 +30,13 @@ class ConfigsBuilderConfiguration {
     private DynamoDbAsyncClient dynamoDbAsyncClient;
     @Autowired
     private CloudWatchAsyncClient cloudWatchAsyncClient;
+    @Autowired
+    private KinesisShardRecordConsumerFactory kinesisShardRecordConsumerFactory;
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
     ConfigsBuilder configsBuilder() {
         ConfigsBuilder configsBuilder = new ConfigsBuilder(streamName, applicationName, kinesisAsyncClient, dynamoDbAsyncClient,
-            cloudWatchAsyncClient, UUID.randomUUID().toString(), new KinesisShardRecordProcessorFactory());
+            cloudWatchAsyncClient, UUID.randomUUID().toString(), kinesisShardRecordConsumerFactory);
 
         configsBuilder.tableName(tableName);
 

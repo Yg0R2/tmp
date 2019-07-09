@@ -1,10 +1,7 @@
 package com.yg0r2.kinesis.client.example.aws.config;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 
 import software.amazon.awssdk.http.Protocol;
 import software.amazon.awssdk.http.SdkHttpConfigurationOption;
@@ -16,7 +13,6 @@ import software.amazon.awssdk.utils.AttributeMap;
 class SdkHttpClientConfiguration {
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
     SdkAsyncHttpClient sdkAsyncHttpClient() {
         return NettyNioAsyncHttpClient.builder()
             .buildWithDefaults(createDefaultAttributeMap());

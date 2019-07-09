@@ -16,6 +16,9 @@ dependencies {
     compile('com.amazonaws:amazon-kinesis-producer:0.12.11')
     compile('software.amazon.kinesis:amazon-kinesis-client:2.2.0')
 
+    compile "io.springfox:springfox-swagger2:2.9.2"
+    compile "io.springfox:springfox-swagger-ui:2.9.2"
+
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
     testImplementation group: 'org.testng', name: 'testng', version: '+'
 
