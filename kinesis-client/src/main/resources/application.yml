@@ -1,0 +1,34 @@
+#logging.level.root: DEBUG
+application.name: kinesis-client
+
+aws:
+  region: "us-east-1"
+  cloudWatch:
+    protocol: "https"
+    host: "localhost"
+    port: 4582
+    endpoint: "${aws.cloudWatch.protocol}://${aws.cloudWatch.host}:${aws.cloudWatch.port}"
+  dynamoDB:
+    protocol: "https"
+    host: "localhost"
+    port: 4569
+    endpoint: "${aws.dynamoDB.protocol}://${aws.dynamoDB.host}:${aws.dynamoDB.port}"
+    stream:
+      fastLane:
+        tableName: "fast-lane-dynamo-table"
+  kinesis:
+    protocol: "https"
+    host: "localhost"
+    port: 4568
+    endpoint: "${aws.kinesis.protocol}://${aws.kinesis.host}:${aws.kinesis.port}"
+    stream:
+      startup.timeout.ms: 600000
+      fastLane:
+        name: "test-fast-lane"
+        shardCount: 1
+      slowLane:
+        name: "test-slow-lane"
+        shardCount: 1
+      producer:
+        threadPoolSize: 10
+        maxConnections: 1
