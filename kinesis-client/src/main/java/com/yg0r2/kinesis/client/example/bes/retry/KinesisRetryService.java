@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yg0r2.kinesis.client.example.bes.IgnoredRecordLogger;
 import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
 import com.yg0r2.kinesis.client.example.kinesis.record.producer.KinesisRecordProducer;
 
@@ -18,6 +19,8 @@ public class KinesisRetryService implements RetryService<KinesisRecord> {
 
     @Autowired
     private KinesisRecordProducer kinesisRecordProducer;
+    @Autowired
+    private IgnoredRecordLogger<KinesisRecord> ignoredKinesisRecordLogger;
 
     @Override
     public boolean canExecuteRetry(KinesisRecord kinesisRecord) {
@@ -32,6 +35,7 @@ public class KinesisRetryService implements RetryService<KinesisRecord> {
         }
         else {
             LOGGER.error("Ignore record: {}", kinesisRecord);
+            ignoredKinesisRecordLogger.log(kinesisRecord);
         }
     }
 

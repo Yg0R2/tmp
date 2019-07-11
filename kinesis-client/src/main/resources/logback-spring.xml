@@ -1,0 +1,32 @@
+<configuration>
+  <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date %green([%-15thread{15}]) %highlight(%-5level) %logger{30} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE_APPENDER" class="ch.qos.logback.core.FileAppender">
+    <file>${LOG_PATH}/Kinesis-client.log</file>
+    <encoder>
+      <pattern>%date [%thread] %level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="IGNORED_REQUESTS_APPENDER" class="ch.qos.logback.core.FileAppender">
+    <file>${LOG_PATH}/Ignored.log</file>
+    <encoder>
+      <pattern>%date [%thread] %level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.yg0r2.kinesis.client.example.bes.IgnoredKinesisRecordLogger" level="INFO" additivity="false">
+    <appender-ref ref="IGNORED_REQUESTS_APPENDER" />
+  </logger>
+
+  <springProfile name="default">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE_APPENDER" />
+      <appender-ref ref="FILE_APPENDER" />
+    </root>
+  </springProfile>
+</configuration>

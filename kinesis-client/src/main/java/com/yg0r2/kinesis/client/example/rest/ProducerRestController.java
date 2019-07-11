@@ -4,16 +4,23 @@ import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
+import com.yg0r2.kinesis.client.example.bes.domain.ServiceCallContext;
 import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
 import com.yg0r2.kinesis.client.example.kinesis.record.producer.KinesisRecordProducer;
 
@@ -38,13 +45,33 @@ public class ProducerRestController {
         return "Scheduled producing records...";
     }
 
-    private void publishRecord() {
-        kinesisRecordProducer.produce(createKinesisRecord());
+    @PostMapping("/api/producer/single")
+    public HttpStatus handleRequest(@Valid @ModelAttribute("context") ServiceCallContext serviceCallContext,
+        @Valid @RequestBody BookingEmailRequest bookingEmailRequest) {
+
+        BookingEmailRequest updatedBookingEmailRequest = BookingEmailRequest.builder(bookingEmailRequest)
+            .withRequestId(serviceCallContext.getRequestId())
+            .build();
+
+        kinesisRecordProducer.produce(createKinesisRecord(updatedBookingEmailRequest));
+
+        return HttpStatus.OK;
     }
 
-    private KinesisRecord createKinesisRecord() {
+    @ModelAttribute("context")
+    public ServiceCallContext bindServiceCallContext(HttpServletRequest request) {
+        return ServiceCallContext.builder()
+            .withRequestId(UUID.fromString(request.getHeader("Request-Context-Request-Id")))
+            .build();
+    }
+
+    private void publishRecord() {
+        kinesisRecordProducer.produce(createKinesisRecord(createBookingEmailRequest()));
+    }
+
+    private KinesisRecord createKinesisRecord(BookingEmailRequest bookingEmailRequest) {
         return KinesisRecord.builder()
-            .withBookingEmailRequest(createBookingEmailRequest())
+            .withBookingEmailRequest(bookingEmailRequest)
             .build();
     }
 

@@ -1,5 +1,8 @@
-#logging.level.root: DEBUG
 application.name: kinesis-client
+server.port: 6060
+
+logging.path: ./build/logs
+#logging.level.root: DEBUG
 
 aws:
   region: "us-east-1"

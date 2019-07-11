@@ -59,10 +59,10 @@ public final class KinesisRecord implements Record {
         private BookingEmailRequest bookingEmailRequest;
         private Integer retryCount;
 
-        Builder() {
+        private Builder() {
         }
 
-        Builder(KinesisRecord kinesisRecord) {
+        private Builder(KinesisRecord kinesisRecord) {
             bookingEmailRequest = kinesisRecord.getBookingEmailRequest();
             retryCount = kinesisRecord.getRetryCount();
         }

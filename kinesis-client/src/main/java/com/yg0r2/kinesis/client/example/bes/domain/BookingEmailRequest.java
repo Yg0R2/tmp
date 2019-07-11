@@ -6,11 +6,13 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(builder = BookingEmailRequest.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookingEmailRequest {
 
     private final UUID requestId;
@@ -42,9 +44,20 @@ public class BookingEmailRequest {
         return new Builder();
     }
 
+    public static Builder builder(BookingEmailRequest bookingEmailRequest) {
+        return new Builder(bookingEmailRequest);
+    }
+
     public static class Builder {
 
         private UUID requestId;
+
+        private Builder() {
+        }
+
+        private Builder(BookingEmailRequest bookingEmailRequest) {
+            requestId = bookingEmailRequest.requestId;
+        }
 
         public Builder withRequestId(UUID requestId) {
             this.requestId = requestId;
