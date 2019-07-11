@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
+import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
 import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
 import com.yg0r2.kinesis.client.example.kinesis.record.producer.KinesisRecordProducer;
 
@@ -50,8 +50,12 @@ public class SampleCommandLineRunner implements CommandLineRunner {
     }
 
     private void publishRecord() {
-        KinesisRecord kinesisRecord = KinesisRecord.builder()
+        BookingEmailRequest bookingEmailRequest = BookingEmailRequest.builder()
             .withRequestId(UUID.randomUUID())
+            .build();
+
+        KinesisRecord kinesisRecord = KinesisRecord.builder()
+            .withBookingEmailRequest(bookingEmailRequest)
             .build();
 
         kinesisRecordProducer.produce(kinesisRecord);

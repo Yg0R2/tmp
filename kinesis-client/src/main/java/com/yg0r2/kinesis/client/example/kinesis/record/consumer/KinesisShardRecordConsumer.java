@@ -32,6 +32,8 @@ public class KinesisShardRecordConsumer implements ShardRecordProcessor {
     private ThreadPoolTaskExecutor consumerThreadPoolTaskExecutor;
     @Autowired
     private KinesisRecordDeserializer kinesisRecordDeserializer;
+    @Autowired
+    private KinesisRecordProcessor kinesisRecordProcessor;
 
     private String shardId;
 
@@ -58,7 +60,7 @@ public class KinesisShardRecordConsumer implements ShardRecordProcessor {
 
             processRecordsInput.records().stream()
                 .map(kinesisRecordDeserializer::deserialize)
-                .map(KinesisRecordConsumerRunnable::new)
+                .map(kinesisRecord -> new KinesisRecordConsumerRunnable(kinesisRecord, kinesisRecordProcessor))
                 .forEach(consumerThreadPoolTaskExecutor::execute);
 
             processRecordsInput.checkpointer().checkpoint();

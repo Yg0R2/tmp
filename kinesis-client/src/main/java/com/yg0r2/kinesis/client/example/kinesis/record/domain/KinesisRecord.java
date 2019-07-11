@@ -1,7 +1,6 @@
 package com.yg0r2.kinesis.client.example.kinesis.record.domain;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -9,21 +8,23 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
+import com.yg0r2.kinesis.client.example.bes.domain.Record;
 
 @JsonDeserialize(builder = KinesisRecord.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public final class KinesisRecord {
+public final class KinesisRecord implements Record {
 
-    private final UUID requestId;
+    private final BookingEmailRequest bookingEmailRequest;
     private final int retryCount;
 
     private KinesisRecord(Builder builder) {
-        requestId = builder.requestId;
+        bookingEmailRequest = builder.bookingEmailRequest;
         retryCount = Optional.ofNullable(builder.retryCount).orElse(0);
     }
 
-    public UUID getRequestId() {
-        return requestId;
+    public BookingEmailRequest getBookingEmailRequest() {
+        return bookingEmailRequest;
     }
 
     public int getRetryCount() {
@@ -49,13 +50,25 @@ public final class KinesisRecord {
         return new Builder();
     }
 
+    public static Builder builder(KinesisRecord kinesisRecord) {
+        return new Builder(kinesisRecord);
+    }
+
     public static class Builder {
 
-        private UUID requestId;
+        private BookingEmailRequest bookingEmailRequest;
         private Integer retryCount;
 
-        public Builder withRequestId(UUID requestId) {
-            this.requestId = requestId;
+        Builder() {
+        }
+
+        Builder(KinesisRecord kinesisRecord) {
+            bookingEmailRequest = kinesisRecord.getBookingEmailRequest();
+            retryCount = kinesisRecord.getRetryCount();
+        }
+
+        public Builder withBookingEmailRequest(BookingEmailRequest bookingEmailRequest) {
+            this.bookingEmailRequest = bookingEmailRequest;
 
             return this;
         }

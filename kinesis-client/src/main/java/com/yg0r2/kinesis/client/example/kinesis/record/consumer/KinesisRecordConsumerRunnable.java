@@ -10,20 +10,18 @@ public class KinesisRecordConsumerRunnable implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisRecordConsumerRunnable.class);
 
     private final KinesisRecord kinesisRecord;
+    private final KinesisRecordProcessor kinesisRecordProcessor;
 
-    public KinesisRecordConsumerRunnable(KinesisRecord kinesisRecord) {
+    public KinesisRecordConsumerRunnable(KinesisRecord kinesisRecord, KinesisRecordProcessor kinesisRecordProcessor) {
         this.kinesisRecord = kinesisRecord;
+        this.kinesisRecordProcessor = kinesisRecordProcessor;
     }
 
     @Override
     public void run() {
         LOGGER.info("Consuming record: {}", kinesisRecord);
 
-        try {
-            Thread.sleep(5000);
-        }
-        catch (InterruptedException e) {
-        }
+        kinesisRecordProcessor.processRecord(kinesisRecord);
 
         LOGGER.info("Consumed record: {}", kinesisRecord);
     }

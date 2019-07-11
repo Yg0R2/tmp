@@ -43,7 +43,7 @@ public class KinesisRecordProducer {
     }
 
     private UserRecord createUserRecord(KinesisRecord kinesisRecord) {
-        return new UserRecord(streamName, kinesisRecord.getRequestId().toString(), kinesisRecordSerializer.serialize(kinesisRecord));
+        return new UserRecord(streamName, kinesisRecord.getBookingEmailRequest().toString(), kinesisRecordSerializer.serialize(kinesisRecord));
     }
 
     private UserRecordResult getUserRecordResult(UserRecord userRecord) {
