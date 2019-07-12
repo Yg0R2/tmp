@@ -1,7 +1,50 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+        dockerVersion = '0.22.1'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${dockerVersion}")
+    }
+}
+
 apply from: '../gradle/allProjects.gradle'
+apply plugin: 'com.palantir.docker'
+
+ext {
+    explodedJarDir = 'exploded'
+}
+
+task explodeJar(type: Copy) {
+    dependsOn bootJar
+
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/${explodedJarDir}")
+}
+
+docker {
+    name "kinesis-client"
+
+    copySpec.from(tasks.explodeJar.outputs).into(explodedJarDir)
+
+    buildArgs([
+        'EXPLODED_JAR_DIR': explodedJarDir
+    ])
+}
 
 springBoot {
     mainClassName = 'com.yg0r2.kinesis.client.example.SampleApplication'
+}
+
+jar {
+    enabled = true
 }
 
 test {

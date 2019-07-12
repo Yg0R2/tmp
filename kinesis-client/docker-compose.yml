@@ -18,3 +18,17 @@ services:
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+  kinesis-client1:
+    container_name: kc1
+    depends_on:
+      - localstack
+    image: kinesis-client
+    ports:
+      - 8080:8080
+  kinesis-client2:
+    container_name: kc2
+    depends_on:
+      - localstack
+    image: kinesis-client
+    ports:
+      - 8081:8080

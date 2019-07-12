@@ -24,12 +24,7 @@ public class RequestResubmittingErrorHandlerAspect {
     @Autowired
     private RetryService<KinesisRecord> kinesisRetryService;
     @Autowired
-    private KinesisRecordProducer kinesisRecordProducer;
-
-    public RequestResubmittingErrorHandlerAspect(RetryService<KinesisRecord> kinesisRetryService, KinesisRecordProducer kinesisRecordProducer) {
-        this.kinesisRetryService = kinesisRetryService;
-        this.kinesisRecordProducer = kinesisRecordProducer;
-    }
+    private KinesisRecordProducer slowLaneKinesisRecordProducer;
 
     @Around("execution(* com.yg0r2.kinesis.client.example.kinesis.record.consumer.KinesisRecordProcessor.processRecord(..))")
     public void executeDefendedMethod(ProceedingJoinPoint proceedingJoinPoint) {
@@ -47,7 +42,7 @@ public class RequestResubmittingErrorHandlerAspect {
         else {
             LOGGER.info("Resubmitting currently cannot retryable record: {}", kinesisRecord);
 
-            kinesisRecordProducer.produce(kinesisRecord);
+            slowLaneKinesisRecordProducer.produce(kinesisRecord);
         }
     }
 

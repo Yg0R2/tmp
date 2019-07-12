@@ -8,9 +8,6 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.amazonaws.services.kinesis.producer.Attempt;
 import com.amazonaws.services.kinesis.producer.KinesisProducer;
@@ -20,18 +17,19 @@ import com.amazonaws.services.kinesis.producer.UserRecordResult;
 import com.yg0r2.kinesis.client.example.kinesis.record.KinesisRecordSerializer;
 import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
 
-@Component
 public class KinesisRecordProducer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisRecordProducer.class);
 
-    @Value("${aws.kinesis.stream.fastLane.name}")
-    private String streamName;
+    private final String streamName;
+    private final KinesisProducer kinesisProducer;
+    private final KinesisRecordSerializer kinesisRecordSerializer;
 
-    @Autowired
-    private KinesisProducer kinesisProducer;
-    @Autowired
-    private KinesisRecordSerializer kinesisRecordSerializer;
+    public KinesisRecordProducer(KinesisProducer kinesisProducer, String streamName, KinesisRecordSerializer kinesisRecordSerializer) {
+        this.streamName = streamName;
+        this.kinesisProducer = kinesisProducer;
+        this.kinesisRecordSerializer = kinesisRecordSerializer;
+    }
 
     public void produce(KinesisRecord kinesisRecord) {
         LOGGER.info("Producing record: {}", kinesisRecord);

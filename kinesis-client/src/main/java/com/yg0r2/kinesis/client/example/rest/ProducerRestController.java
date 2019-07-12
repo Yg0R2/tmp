@@ -1,5 +1,6 @@
 package com.yg0r2.kinesis.client.example.rest;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -29,14 +30,14 @@ public class ProducerRestController {
 
     private static final Logger LOGGER  = LoggerFactory.getLogger(ProducerRestController.class);
 
-    private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-
     @Autowired
-    private KinesisRecordProducer kinesisRecordProducer;
+    private KinesisRecordProducer fastLaneKinesisRecordProducer;
 
     @GetMapping("/api/producer")
     public String startProducing(@RequestParam(defaultValue = "1") @Min(1) int count) {
         LOGGER.info("Scheduled producing records...");
+
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
         for (int i = 0; i < count; i++) {
             scheduledExecutorService.execute(() -> publishRecord());
@@ -53,20 +54,24 @@ public class ProducerRestController {
             .withRequestId(serviceCallContext.getRequestId())
             .build();
 
-        kinesisRecordProducer.produce(createKinesisRecord(updatedBookingEmailRequest));
+        fastLaneKinesisRecordProducer.produce(createKinesisRecord(updatedBookingEmailRequest));
 
         return HttpStatus.OK;
     }
 
     @ModelAttribute("context")
     public ServiceCallContext bindServiceCallContext(HttpServletRequest request) {
+        UUID requestId = Optional.ofNullable(request.getHeader("Request-Context-Request-Id"))
+            .map(UUID::fromString)
+            .orElse(UUID.randomUUID());
+
         return ServiceCallContext.builder()
-            .withRequestId(UUID.fromString(request.getHeader("Request-Context-Request-Id")))
+            .withRequestId(requestId)
             .build();
     }
 
     private void publishRecord() {
-        kinesisRecordProducer.produce(createKinesisRecord(createBookingEmailRequest()));
+        fastLaneKinesisRecordProducer.produce(createKinesisRecord(createBookingEmailRequest()));
     }
 
     private KinesisRecord createKinesisRecord(BookingEmailRequest bookingEmailRequest) {

@@ -1,5 +1,5 @@
 application.name: kinesis-client
-server.port: 6060
+#server.port: 6060
 
 logging.path: ./build/logs
 #logging.level.root: DEBUG
@@ -8,20 +8,22 @@ aws:
   region: "us-east-1"
   cloudWatch:
     protocol: "https"
-    host: "localhost"
+    host: "docker.for.win.localhost"
     port: 4582
     endpoint: "${aws.cloudWatch.protocol}://${aws.cloudWatch.host}:${aws.cloudWatch.port}"
   dynamoDB:
     protocol: "https"
-    host: "localhost"
+    host: "docker.for.win.localhost"
     port: 4569
     endpoint: "${aws.dynamoDB.protocol}://${aws.dynamoDB.host}:${aws.dynamoDB.port}"
     stream:
       fastLane:
         tableName: "fast-lane-dynamo-table"
+      slowLane:
+        tableName: "slow-lane-dynamo-table"
   kinesis:
     protocol: "https"
-    host: "localhost"
+    host: "docker.for.win.localhost"
     port: 4568
     endpoint: "${aws.kinesis.protocol}://${aws.kinesis.host}:${aws.kinesis.port}"
     worker.awaitTerminationInSeconds: 30
@@ -31,10 +33,13 @@ aws:
       idleTimeBetweenReadsInMillis: 250
       fastLane:
         name: "test-fast-lane"
-        shardCount: 1
+        shardCount: 2
         threadPoolSize: 10
-        maxConnections: 1
+        maxConnections: "${aws.kinesis.stream.fastLane.threadPoolSize}"
         awaitTerminationInSeconds: 20
       slowLane:
         name: "test-slow-lane"
-        shardCount: 1
+        shardCount: 2
+        threadPoolSize: 2
+        maxConnections: "${aws.kinesis.stream.slowLane.threadPoolSize}"
+        awaitTerminationInSeconds: 20

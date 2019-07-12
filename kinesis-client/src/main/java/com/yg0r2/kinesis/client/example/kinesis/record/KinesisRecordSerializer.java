@@ -21,9 +21,9 @@ public class KinesisRecordSerializer {
     public ByteBuffer serialize(KinesisRecord kinesisRecord) {
         byte[] data = getJsonValue(kinesisRecord);
 
-        synchronized (lock) {
+        //synchronized (lock) {
             return ByteBuffer.wrap(data);
-        }
+        //}
     }
 
     private byte[] getJsonValue(KinesisRecord kinesisRecord) {

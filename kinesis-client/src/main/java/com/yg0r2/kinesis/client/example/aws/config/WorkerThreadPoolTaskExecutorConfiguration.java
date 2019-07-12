@@ -12,10 +12,10 @@ public class WorkerThreadPoolTaskExecutorConfiguration {
     private int awaitTermination;
 
     @Bean
-    public ThreadPoolTaskExecutor workerThreadPoolTaskExecutor() {
+    public ThreadPoolTaskExecutor fastLaneWorkerThreadPoolTaskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
 
-        taskExecutor.setThreadNamePrefix("worker-thread-");
+        taskExecutor.setThreadNamePrefix("fastLane-worker-thread-");
         taskExecutor.setCorePoolSize(1);
         taskExecutor.setMaxPoolSize(1);
         taskExecutor.setDaemon(true);
@@ -25,4 +25,17 @@ public class WorkerThreadPoolTaskExecutorConfiguration {
         return taskExecutor;
     }
 
+    @Bean
+    public ThreadPoolTaskExecutor slowLaneWorkerThreadPoolTaskExecutor() {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+
+        taskExecutor.setThreadNamePrefix("slowLane-worker-thread-");
+        taskExecutor.setCorePoolSize(1);
+        taskExecutor.setMaxPoolSize(1);
+        taskExecutor.setDaemon(true);
+        taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        taskExecutor.setAwaitTerminationSeconds(awaitTermination);
+
+        return taskExecutor;
+    }
 }

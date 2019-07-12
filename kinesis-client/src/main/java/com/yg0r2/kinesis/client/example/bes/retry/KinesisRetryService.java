@@ -18,7 +18,7 @@ public class KinesisRetryService implements RetryService<KinesisRecord> {
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisRetryService.class);
 
     @Autowired
-    private KinesisRecordProducer kinesisRecordProducer;
+    private KinesisRecordProducer slowLaneKinesisRecordProducer;
     @Autowired
     private IgnoredRecordLogger<KinesisRecord> ignoredKinesisRecordLogger;
 
@@ -31,7 +31,7 @@ public class KinesisRetryService implements RetryService<KinesisRecord> {
     public void handleFailedRetry(KinesisRecord kinesisRecord, Throwable throwable) {
         if (canRescheduleFailedRetry(kinesisRecord)) {
             LOGGER.info("Resubmit record: {}", kinesisRecord);
-            kinesisRecordProducer.produce(createUpdatedRecord(kinesisRecord));
+            slowLaneKinesisRecordProducer.produce(createUpdatedRecord(kinesisRecord));
         }
         else {
             LOGGER.error("Ignore record: {}", kinesisRecord);

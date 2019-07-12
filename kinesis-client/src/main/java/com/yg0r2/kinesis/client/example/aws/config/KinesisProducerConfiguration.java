@@ -17,30 +17,39 @@ public class KinesisProducerConfiguration {
     private String kinesisHost;
     @Value("${aws.kinesis.port}")
     private long kinesisPort;
+
     @Value("${aws.kinesis.stream.fastLane.maxConnections}")
-    private int maxConnections;
+    private int fastLaneMaxConnections;
+
+    @Value("${aws.kinesis.stream.slowLane.maxConnections}")
+    private int slowLaneMaxConnections;
 
     @Autowired
     private AWSCredentialsProvider awsCredentialsProvider;
 
     @Bean
-    public KinesisProducer kinesisProducer() {
-        return new KinesisProducer(createKinesisProducerConfiguration());
+    public KinesisProducer fastLaneKinesisProducer() {
+        return new KinesisProducer(createKinesisProducerConfiguration(fastLaneMaxConnections));
     }
 
-    private com.amazonaws.services.kinesis.producer.KinesisProducerConfiguration createKinesisProducerConfiguration() {
+    @Bean
+    public KinesisProducer slowLaneKinesisProducer() {
+        return new KinesisProducer(createKinesisProducerConfiguration(slowLaneMaxConnections));
+    }
+
+    private com.amazonaws.services.kinesis.producer.KinesisProducerConfiguration createKinesisProducerConfiguration(long maxConnections) {
         return new com.amazonaws.services.kinesis.producer.KinesisProducerConfiguration()
             .setRegion(region)
-            .setMaxConnections(maxConnections)
+            //.setMaxConnections(maxConnections)
             .setCredentialsProvider(awsCredentialsProvider)
             .setKinesisEndpoint(kinesisHost)
             .setKinesisPort(kinesisPort)
-            .setRequestTimeout(100L)
+            //.setRequestTimeout(100L)
             .setAggregationEnabled(false)
             .setVerifyCertificate(false)
             .setMetricsLevel("none")
-            .setRecordTtl(200L)
-            .setRecordMaxBufferedTime(0L);
+            //.setRecordMaxBufferedTime(0L)
+            .setRecordTtl(60000L);
     }
 
 }
