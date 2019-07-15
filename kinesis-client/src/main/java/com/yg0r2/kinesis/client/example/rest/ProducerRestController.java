@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yg0r2.kinesis.client.example.aws.kinesis.record.domain.KinesisRecord;
-import com.yg0r2.kinesis.client.example.aws.kinesis.record.producer.KinesisRecordProducer;
 import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
 import com.yg0r2.kinesis.client.example.bes.domain.ServiceCallContext;
+import com.yg0r2.kinesis.client.example.bes.kinesis.record.domain.KinesisMessageRecord;
+import com.yg0r2.kinesis.client.example.messaging.service.RecordProducer;
 
 @RestController
 public class ProducerRestController {
@@ -31,7 +31,7 @@ public class ProducerRestController {
     private static final Logger LOGGER  = LoggerFactory.getLogger(ProducerRestController.class);
 
     @Autowired
-    private KinesisRecordProducer fastLaneKinesisRecordProducer;
+    private RecordProducer<KinesisMessageRecord> fastLaneKinesisRecordProducer;
 
     @GetMapping("/api/producer")
     public String startProducing(@RequestParam(defaultValue = "1") @Min(1) int count) {
@@ -74,8 +74,8 @@ public class ProducerRestController {
         fastLaneKinesisRecordProducer.produce(createKinesisRecord(createBookingEmailRequest()));
     }
 
-    private KinesisRecord createKinesisRecord(BookingEmailRequest bookingEmailRequest) {
-        return KinesisRecord.builder()
+    private KinesisMessageRecord createKinesisRecord(BookingEmailRequest bookingEmailRequest) {
+        return KinesisMessageRecord.builder()
             .withBookingEmailRequest(bookingEmailRequest)
             .build();
     }

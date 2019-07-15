@@ -1,0 +1,4 @@
+aws:
+  cloudWatch.host: "docker.for.win.localhost"
+  dynamoDB.host: "docker.for.win.localhost"
+  kinesis.host: "docker.for.win.localhost"

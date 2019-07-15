@@ -8,12 +8,12 @@ aws:
   region: "us-east-1"
   cloudWatch:
     protocol: "https"
-    host: "docker.for.win.localhost"
+    host: "localhost"
     port: 4582
     endpoint: "${aws.cloudWatch.protocol}://${aws.cloudWatch.host}:${aws.cloudWatch.port}"
   dynamoDB:
     protocol: "https"
-    host: "docker.for.win.localhost"
+    host: "localhost"
     port: 4569
     endpoint: "${aws.dynamoDB.protocol}://${aws.dynamoDB.host}:${aws.dynamoDB.port}"
     stream:
@@ -23,10 +23,12 @@ aws:
         tableName: "slow-lane-dynamo-table"
   kinesis:
     protocol: "https"
-    host: "docker.for.win.localhost"
+    host: "localhost"
     port: 4568
     endpoint: "${aws.kinesis.protocol}://${aws.kinesis.host}:${aws.kinesis.port}"
-    worker.awaitTerminationInSeconds: 30
+    worker:
+      awaitTerminationInSeconds: 30
+      threadPoolSize: 1
     stream:
       startupTimeoutInMillis: 30000
       maxRecordCount: 1

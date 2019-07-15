@@ -39,6 +39,10 @@ docker {
     ])
 }
 
+compileJava {
+    options.compilerArgs << '-Xlint:unchecked'
+}
+
 springBoot {
     mainClassName = 'com.yg0r2.kinesis.client.example.SampleApplication'
 }
