@@ -21,13 +21,15 @@ public class HystrixBackendService implements BackendService {
     @Override
     public String getData() {
         LOGGER.info("inside HystrixBackendService.getData");
-        return "alma";
-        //throw new RuntimeException("FAILED");
+
+        //return "HystrixBackendService.getData";
+        throw new RuntimeException("HystrixBackendService.getData");
     }
 
-    private String throwException() {
+    private String fallbackThrowException() {
         LOGGER.info("inside HystrixBackendService.fallbackThrowException");
 
-        throw new RuntimeException("fallback");
+        //return "HystrixBackendService.fallbackThrowException";
+        throw new RuntimeException("HystrixBackendService.fallbackThrowException");
     }
 }

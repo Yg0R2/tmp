@@ -34,7 +34,7 @@ public class HystrixTestService implements TestService {
     public String fallbackMethod() {
         LOGGER.info("inside HystrixTestService.fallbackMethod");
 
-        return "Fallback";
+        return "HystrixTestService.fallbackMethod";
     }
 
 }
