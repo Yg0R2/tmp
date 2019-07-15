@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+        dockerVersion = '0.22.1'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${dockerVersion}")
+    }
+}
+
+apply from: '../gradle/allProjects.gradle'
+apply plugin: 'com.palantir.docker'
+
+ext {
+    explodedJarDir = 'exploded'
+}
+
+task explodeJar(type: Copy) {
+    dependsOn bootJar
+
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/${explodedJarDir}")
+}
+
+docker {
+    name "kinesis-client"
+
+    copySpec.from(tasks.explodeJar.outputs).into(explodedJarDir)
+
+    buildArgs([
+        'EXPLODED_JAR_DIR': explodedJarDir
+    ])
+}
+
+compileJava {
+    options.compilerArgs << '-Xlint:unchecked'
+}
+
+springBoot {
+    mainClassName = 'com.yg0r2.kinesis.client.example.SampleApplication'
+}
+
+jar {
+    enabled = true
+}
+
+test {
+    useTestNG()
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: springBootVersion, ext: 'pom'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+
+    compile('com.amazonaws:aws-java-sdk-s3:1.11.263')
+    compile('com.amazonaws:amazon-kinesis-producer:0.12.11')
+    compile('software.amazon.kinesis:amazon-kinesis-client:2.2.0')
+
+    compile "io.springfox:springfox-swagger2:2.9.2"
+    compile "io.springfox:springfox-swagger-ui:2.9.2"
+
+    compile 'aspectj:aspectjrt:1.5.4'
+    compile 'aspectj:aspectjweaver:1.5.4'
+
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
+    testImplementation group: 'org.testng', name: 'testng', version: '+'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

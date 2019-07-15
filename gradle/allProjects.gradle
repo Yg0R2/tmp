@@ -7,8 +7,8 @@ allprojects {
     group = 'com.yg0r2'
     version = '0.0.1-SNAPSHOT'
 
-    sourceCompatibility = 1.11
-    targetCompatibility = 1.11
+    sourceCompatibility = 11
+    targetCompatibility = 11
 
     repositories {
         mavenCentral()
@@ -17,5 +17,7 @@ allprojects {
 
     dependencies {
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: '+'
+
+        implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     }
 }

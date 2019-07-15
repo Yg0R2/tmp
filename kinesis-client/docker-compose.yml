@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4567-4597:4567-4597"
+      - "${PORT_WEB_UI-7070}:${PORT_WEB_UI-8080}"
+    environment:
+      - SERVICES=${SERVICES:-kinesis,dynamodb,cloudwatch}
+      - DEBUG=${DEBUG- }
+      - DATA_DIR=${DATA_DIR- }
+      - PORT_WEB_UI=${PORT_WEB_UI- }
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - USE_SSL=true
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  kinesis-client:
+    container_name: kc
+    depends_on:
+      - localstack
+    image: kinesis-client
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=default,${ENV:-docker}

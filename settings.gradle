@@ -9,4 +9,4 @@ rootProject.name = 'tmp'
 //include 'circuit-breaker-thermos'
 //include 'email-request-spammer-service'
 include 'factorio'
-
+include 'kinesis-client'
