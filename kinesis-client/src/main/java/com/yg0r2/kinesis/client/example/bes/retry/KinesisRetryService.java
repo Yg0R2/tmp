@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.yg0r2.kinesis.client.example.aws.kinesis.record.domain.KinesisRecord;
+import com.yg0r2.kinesis.client.example.aws.kinesis.record.producer.KinesisRecordProducer;
 import com.yg0r2.kinesis.client.example.bes.IgnoredRecordLogger;
-import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
-import com.yg0r2.kinesis.client.example.kinesis.record.producer.KinesisRecordProducer;
 
 @Component
 public class KinesisRetryService implements RetryService<KinesisRecord> {

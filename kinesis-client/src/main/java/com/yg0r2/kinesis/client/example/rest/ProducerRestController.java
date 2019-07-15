@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yg0r2.kinesis.client.example.aws.kinesis.record.domain.KinesisRecord;
+import com.yg0r2.kinesis.client.example.aws.kinesis.record.producer.KinesisRecordProducer;
 import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
 import com.yg0r2.kinesis.client.example.bes.domain.ServiceCallContext;
-import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
-import com.yg0r2.kinesis.client.example.kinesis.record.producer.KinesisRecordProducer;
 
 @RestController
 public class ProducerRestController {

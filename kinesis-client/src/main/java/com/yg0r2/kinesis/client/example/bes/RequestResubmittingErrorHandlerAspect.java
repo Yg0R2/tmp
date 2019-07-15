@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import com.yg0r2.kinesis.client.example.aws.kinesis.record.domain.KinesisRecord;
+import com.yg0r2.kinesis.client.example.aws.kinesis.record.producer.KinesisRecordProducer;
 import com.yg0r2.kinesis.client.example.bes.retry.RetryService;
-import com.yg0r2.kinesis.client.example.kinesis.record.domain.KinesisRecord;
-import com.yg0r2.kinesis.client.example.kinesis.record.producer.KinesisRecordProducer;
 
 @Aspect
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -26,7 +26,7 @@ public class RequestResubmittingErrorHandlerAspect {
     @Autowired
     private KinesisRecordProducer slowLaneKinesisRecordProducer;
 
-    @Around("execution(* com.yg0r2.kinesis.client.example.kinesis.record.consumer.KinesisRecordProcessor.processRecord(..))")
+    @Around("execution(* com.yg0r2.kinesis.client.example.aws.kinesis.record.consumer.KinesisRecordProcessor.processRecord(..))")
     public void executeDefendedMethod(ProceedingJoinPoint proceedingJoinPoint) {
         KinesisRecord kinesisRecord = getKinesisRecord(proceedingJoinPoint);
 
