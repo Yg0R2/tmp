@@ -1,13 +1,25 @@
 package com.yg0r2.kinesis.client.example.messaging.service;
 
+import org.springframework.stereotype.Component;
+
 import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
 import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
 import com.yg0r2.kinesis.client.example.messaging.retry.domain.RetryContext;
 
-public interface MessageRecordFactory<T extends MessageRecord> {
+@Component
+public class MessageRecordFactory {
 
-    T create(BookingEmailRequest bookingEmailRequest);
+    public MessageRecord create(BookingEmailRequest bookingEmailRequest) {
+        return MessageRecord.builder()
+            .withBookingEmailRequest(bookingEmailRequest)
+            .build();
+    }
 
-    T create(T messageRecord, RetryContext retryContext);
+    public MessageRecord create(MessageRecord messageRecord, RetryContext retryContext) {
+        return MessageRecord.builder(messageRecord)
+            .withNextRetryDateTime(retryContext.getRequestNextRetryDateTime())
+            .withRetryCount(retryContext.getRetryCount())
+            .build();
+    }
 
 }

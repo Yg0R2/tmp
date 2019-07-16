@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yg0r2.kinesis.client.example.bes.kinesis.record.domain.KinesisMessageRecord;
+import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
 
 import software.amazon.kinesis.retrieval.KinesisClientRecord;
 
@@ -16,9 +16,9 @@ public class KinesisRecordDeserializer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public KinesisMessageRecord deserialize(KinesisClientRecord kinesisClientRecord) {
+    public MessageRecord deserialize(KinesisClientRecord kinesisClientRecord) {
         try {
-            return objectMapper.readValue(getBytes(kinesisClientRecord), KinesisMessageRecord.class);
+            return objectMapper.readValue(getBytes(kinesisClientRecord), MessageRecord.class);
         }
         catch (IOException exception) {
             throw new RuntimeException(exception);

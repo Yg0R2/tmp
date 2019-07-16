@@ -8,27 +8,23 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yg0r2.kinesis.client.example.bes.kinesis.record.domain.KinesisMessageRecord;
+import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
 
 @Component
 public class KinesisRecordSerializer {
 
-    private final Object lock = new Object();
-
     @Autowired
     private ObjectMapper objectMapper;
 
-    public ByteBuffer serialize(KinesisMessageRecord kinesisRecord) {
-        byte[] data = getJsonValue(kinesisRecord);
+    public ByteBuffer serialize(MessageRecord messageRecord) {
+        byte[] data = getJsonValue(messageRecord);
 
-        //synchronized (lock) {
-            return ByteBuffer.wrap(data);
-        //}
+        return ByteBuffer.wrap(data);
     }
 
-    private byte[] getJsonValue(KinesisMessageRecord kinesisRecord) {
+    private byte[] getJsonValue(MessageRecord messageRecord) {
         try {
-            return objectMapper.writeValueAsString(kinesisRecord).getBytes("UTF-8");
+            return objectMapper.writeValueAsString(messageRecord).getBytes("UTF-8");
         }
         catch (JsonProcessingException | UnsupportedEncodingException exception) {
             throw new RuntimeException(exception);

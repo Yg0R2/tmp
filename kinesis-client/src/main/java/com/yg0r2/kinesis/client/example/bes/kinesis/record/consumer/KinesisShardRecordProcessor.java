@@ -6,6 +6,7 @@ import org.slf4j.MDC;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.yg0r2.kinesis.client.example.bes.kinesis.record.serialization.KinesisRecordDeserializer;
+import com.yg0r2.kinesis.client.example.messaging.service.RecordProcessor;
 
 import software.amazon.kinesis.exceptions.InvalidStateException;
 import software.amazon.kinesis.exceptions.ShutdownException;
@@ -22,14 +23,14 @@ public class KinesisShardRecordProcessor implements ShardRecordProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisShardRecordProcessor.class);
 
     private final KinesisRecordDeserializer kinesisRecordDeserializer;
-    private final KinesisRecordProcessor kinesisRecordProcessor;
+    private final RecordProcessor recordProcessor;
     private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     private String shardId;
 
-    public KinesisShardRecordProcessor(KinesisRecordDeserializer kinesisRecordDeserializer, KinesisRecordProcessor kinesisRecordProcessor, ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+    public KinesisShardRecordProcessor(KinesisRecordDeserializer kinesisRecordDeserializer, RecordProcessor recordProcessor, ThreadPoolTaskExecutor threadPoolTaskExecutor) {
         this.kinesisRecordDeserializer = kinesisRecordDeserializer;
-        this.kinesisRecordProcessor = kinesisRecordProcessor;
+        this.recordProcessor = recordProcessor;
         this.threadPoolTaskExecutor = threadPoolTaskExecutor;
     }
 
@@ -56,7 +57,7 @@ public class KinesisShardRecordProcessor implements ShardRecordProcessor {
 
             processRecordsInput.records().stream()
                 .map(kinesisRecordDeserializer::deserialize)
-                .map(kinesisRecord -> new KinesisRecordProcessorRunnable(kinesisRecord, kinesisRecordProcessor, shardId))
+                .map(kinesisRecord -> new KinesisRecordProcessorRunnable(kinesisRecord, recordProcessor, shardId))
                 .forEach(threadPoolTaskExecutor::execute);
 
             processRecordsInput.checkpointer().checkpoint();

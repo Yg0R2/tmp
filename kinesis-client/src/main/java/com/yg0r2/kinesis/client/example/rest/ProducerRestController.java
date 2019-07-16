@@ -22,19 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
 import com.yg0r2.kinesis.client.example.bes.domain.ServiceCallContext;
-import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
 import com.yg0r2.kinesis.client.example.messaging.service.MessageRecordFactory;
 import com.yg0r2.kinesis.client.example.messaging.service.RecordProducer;
 
 @RestController
-public class ProducerRestController<T extends MessageRecord> {
+public class ProducerRestController {
 
     private static final Logger LOGGER  = LoggerFactory.getLogger(ProducerRestController.class);
 
     @Autowired
-    private RecordProducer<T> fastLaneRecordProducer;
+    private RecordProducer fastLaneRecordProducer;
     @Autowired
-    private MessageRecordFactory<T> messageRecordFactory;
+    private MessageRecordFactory messageRecordFactory;
 
     @GetMapping("/api/producer")
     public String startProducing(@RequestParam(defaultValue = "1") @Min(1) int count) {

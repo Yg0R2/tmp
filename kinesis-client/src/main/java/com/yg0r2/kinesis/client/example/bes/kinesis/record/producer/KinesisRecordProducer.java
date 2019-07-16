@@ -14,11 +14,11 @@ import com.amazonaws.services.kinesis.producer.KinesisProducer;
 import com.amazonaws.services.kinesis.producer.UserRecord;
 import com.amazonaws.services.kinesis.producer.UserRecordFailedException;
 import com.amazonaws.services.kinesis.producer.UserRecordResult;
-import com.yg0r2.kinesis.client.example.bes.kinesis.record.domain.KinesisMessageRecord;
 import com.yg0r2.kinesis.client.example.bes.kinesis.record.serialization.KinesisRecordSerializer;
+import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
 import com.yg0r2.kinesis.client.example.messaging.service.RecordProducer;
 
-public class KinesisRecordProducer implements RecordProducer<KinesisMessageRecord> {
+public class KinesisRecordProducer implements RecordProducer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KinesisRecordProducer.class);
 
@@ -33,17 +33,17 @@ public class KinesisRecordProducer implements RecordProducer<KinesisMessageRecor
     }
 
     @Override
-    public void produce(KinesisMessageRecord kinesisRecord) {
-        LOGGER.info("Producing record: {}", kinesisRecord);
+    public void produce(MessageRecord messageRecord) {
+        LOGGER.info("Producing record: {}", messageRecord);
 
-        Stream.of(kinesisRecord)
+        Stream.of(messageRecord)
             .map(this::createUserRecord)
             .map(this::getUserRecordResult)
             .forEach(this::handleResult);
     }
 
-    private UserRecord createUserRecord(KinesisMessageRecord kinesisRecord) {
-        return new UserRecord(streamName, kinesisRecord.getBookingEmailRequest().toString(), kinesisRecordSerializer.serialize(kinesisRecord));
+    private UserRecord createUserRecord(MessageRecord messageRecord) {
+        return new UserRecord(streamName, messageRecord.getBookingEmailRequest().toString(), kinesisRecordSerializer.serialize(messageRecord));
     }
 
     private UserRecordResult getUserRecordResult(UserRecord userRecord) {

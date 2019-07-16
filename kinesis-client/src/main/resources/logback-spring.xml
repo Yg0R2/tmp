@@ -19,7 +19,7 @@
     </encoder>
   </appender>
 
-  <logger name="com.yg0r2.kinesis.client.example.bes.IgnoredKinesisRecordLogger" level="INFO" additivity="false">
+  <logger name="com.yg0r2.kinesis.client.example.messaging.service.IgnoredMessageRecordLogger" level="INFO" additivity="false">
     <appender-ref ref="IGNORED_REQUESTS_APPENDER" />
   </logger>
 

@@ -14,7 +14,6 @@ public class SlowLaneKinesisShardRecordProcessorFactoryConfiguration {
     private KinesisShardRecordProcessor slowLaneKinesisShardRecordProcessor;
 
     @Bean
-    //@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public KinesisShardRecordProcessorFactory slowLaneKinesisShardRecordProcessorFactory() {
         return new KinesisShardRecordProcessorFactory(slowLaneKinesisShardRecordProcessor);
     }

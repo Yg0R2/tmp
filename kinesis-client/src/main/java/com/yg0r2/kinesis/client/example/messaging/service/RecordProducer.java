@@ -2,8 +2,8 @@ package com.yg0r2.kinesis.client.example.messaging.service;
 
 import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
 
-public interface RecordProducer<T extends MessageRecord> {
+public interface RecordProducer {
 
-    void produce(T messageRecord);
+    void produce(MessageRecord messageRecord);
 
 }
