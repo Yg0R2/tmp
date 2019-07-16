@@ -4,6 +4,8 @@ application.name: kinesis-client
 logging.path: ./build/logs
 #logging.level.root: DEBUG
 
+messaging.implementation: "kinesis"
+
 aws:
   region: "us-east-1"
   cloudWatch:

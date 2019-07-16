@@ -24,7 +24,7 @@ public class FastLaneSchedulerApplicationListener implements ApplicationListener
 
     @PostConstruct
     public void init() {
-        fastLaneWorkerThreadPoolTaskExecutor.execute(fastLaneScheduler);
+        fastLaneWorkerThreadPoolTaskExecutor.submit(fastLaneScheduler);
 
         LOGGER.info("Start processing from stream: {}", fastLaneScheduler.streamName());
     }

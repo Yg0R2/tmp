@@ -24,7 +24,7 @@ public class SlowLaneSchedulerApplicationListener implements ApplicationListener
 
     @PostConstruct
     public void init() {
-        slowLaneWorkerThreadPoolTaskExecutor.execute(slowLaneScheduler);
+        slowLaneWorkerThreadPoolTaskExecutor.submit(slowLaneScheduler);
 
         LOGGER.info("Start processing from stream: {}", slowLaneScheduler.streamName());
     }

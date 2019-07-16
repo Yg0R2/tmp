@@ -22,16 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yg0r2.kinesis.client.example.bes.domain.BookingEmailRequest;
 import com.yg0r2.kinesis.client.example.bes.domain.ServiceCallContext;
-import com.yg0r2.kinesis.client.example.bes.kinesis.record.domain.KinesisMessageRecord;
+import com.yg0r2.kinesis.client.example.messaging.domain.MessageRecord;
+import com.yg0r2.kinesis.client.example.messaging.service.MessageRecordFactory;
 import com.yg0r2.kinesis.client.example.messaging.service.RecordProducer;
 
 @RestController
-public class ProducerRestController {
+public class ProducerRestController<T extends MessageRecord> {
 
     private static final Logger LOGGER  = LoggerFactory.getLogger(ProducerRestController.class);
 
     @Autowired
-    private RecordProducer<KinesisMessageRecord> fastLaneKinesisRecordProducer;
+    private RecordProducer<T> fastLaneRecordProducer;
+    @Autowired
+    private MessageRecordFactory<T> messageRecordFactory;
 
     @GetMapping("/api/producer")
     public String startProducing(@RequestParam(defaultValue = "1") @Min(1) int count) {
@@ -40,7 +43,7 @@ public class ProducerRestController {
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
         for (int i = 0; i < count; i++) {
-            scheduledExecutorService.execute(() -> publishRecord());
+            scheduledExecutorService.execute(() -> publishRecord(createBookingEmailRequest()));
         }
 
         return "Scheduled producing records...";
@@ -54,7 +57,7 @@ public class ProducerRestController {
             .withRequestId(serviceCallContext.getRequestId())
             .build();
 
-        fastLaneKinesisRecordProducer.produce(createKinesisRecord(updatedBookingEmailRequest));
+        publishRecord(updatedBookingEmailRequest);
 
         return HttpStatus.OK;
     }
@@ -70,14 +73,8 @@ public class ProducerRestController {
             .build();
     }
 
-    private void publishRecord() {
-        fastLaneKinesisRecordProducer.produce(createKinesisRecord(createBookingEmailRequest()));
-    }
-
-    private KinesisMessageRecord createKinesisRecord(BookingEmailRequest bookingEmailRequest) {
-        return KinesisMessageRecord.builder()
-            .withBookingEmailRequest(bookingEmailRequest)
-            .build();
+    private void publishRecord(BookingEmailRequest bookingEmailRequest) {
+        fastLaneRecordProducer.produce(messageRecordFactory.create(bookingEmailRequest));
     }
 
     private BookingEmailRequest createBookingEmailRequest() {

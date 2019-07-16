@@ -23,7 +23,7 @@ public class FastLaneKinesisRecordProducerConfiguration {
     private KinesisRecordSerializer kinesisRecordSerializer;
 
     @Bean
-    public RecordProducer<KinesisMessageRecord> fastLaneKinesisRecordProducer() {
+    public RecordProducer<KinesisMessageRecord> fastLaneRecordProducer() {
         return new KinesisRecordProducer(fastLaneKinesisProducer, streamName, kinesisRecordSerializer);
     }
 
