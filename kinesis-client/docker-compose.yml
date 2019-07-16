@@ -18,6 +18,7 @@ services:
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./create_kinesis_stream.sh:/docker-entrypoint-initaws.d/create_kinesis_stream.sh"
   kinesis-client:
     container_name: kc
     depends_on:
