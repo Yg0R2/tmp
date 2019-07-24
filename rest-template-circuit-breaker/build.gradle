@@ -1,0 +1,40 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply from: '../gradle/allProjects.gradle'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useTestNG()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: springBootVersion, ext: 'pom'
+
+    compile 'aspectj:aspectjrt:1.5.4'
+    compile 'aspectj:aspectjweaver:1.5.4'
+
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-dependencies', version: 'Greenwich.RELEASE', ext: 'pom'
+    implementation('org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.1.0.RELEASE')
+
+    implementation('com.netflix.hystrix:hystrix-core:1.5.12')
+    implementation('com.netflix.archaius:archaius-core:0.7.6')
+    implementation('hcom.foundation.net:thermos-api:8.0.226')
+    implementation('hcom.foundation.net:thermos-integration:8.0.226')
+    implementation group: 'hcom.assembly', name: 'thermos-spring-assembly-bundle', version: '1.0.15'//, ext: 'pom'
+    implementation('hcom.foundation:common-library:12.0.488')
+    implementation('net.jodah:failsafe:1.0.5')
+}

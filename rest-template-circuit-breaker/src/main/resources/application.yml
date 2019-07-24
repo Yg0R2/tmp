@@ -1,0 +1,15 @@
+thermos:
+  method-configs:
+    infiniteService:
+      sleepWindowInMilliseconds: 30000
+      timeoutInMilliseconds: 4000
+      metricsHealthSnapshotInMilliseconds: 500
+      metricsRollingStatisticalWindowBuckets: 20
+      metricsRollingStatisticalWindowInMilliseconds: 20000
+      errorThresholdPercentage: 0
+      requestCacheEnabled: false
+      requestVolumeThreshold: 1
+      threadPoolCoreSize: 10
+      threadPoolMaxQueueSize: 5
+      threadPoolQueueSizeRejectionThreshold: 5
+      fallbackEnabled: false
